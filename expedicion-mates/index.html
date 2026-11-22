@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mates">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Expedición Mates</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@500;700;800&display=swap">
+<style>
+/* Layout: an ocean map of topic "islands"; each round is a paper worksheet card floating on the sea, keypad beside it (landscape) or below it (portrait). Single deliberate dark-sea look. */
+:root{
+  --sea:#0c3446; --sea-deep:#072433; --sea-2:#13506a; --sea-3:#1b6683;
+  --foam:#eaf5f2; --foam-dim:#a8c8cb;
+  --sand:#f5c85c; --coral:#ff7b5c; --kelp:#57cf8a;
+  --paper:#fbf6ea; --ink:#1b2a33; --ink-soft:#5d6c72; --rule:#ddd2b9;
+  --display:'Baloo 2','Arial Rounded MT Bold',system-ui,sans-serif;
+  --body:'Nunito',system-ui,-apple-system,sans-serif;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--sea);color:var(--foam);font-family:var(--body);font-size:17px;
+  background-image:radial-gradient(1200px 500px at 80% -10%,var(--sea-3),transparent 60%),radial-gradient(900px 600px at 0% 110%,var(--sea-deep),transparent 60%);
+  background-attachment:fixed;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+button:focus-visible{outline:3px solid var(--sand);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 32px}
+.num{font-variant-numeric:tabular-nums}
+
+/* Home */
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(2.3rem,6vw,3.6rem);line-height:1;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h1 span{color:var(--sand)}
+.lede{color:var(--foam-dim);margin:.5rem 0 0;max-width:60ch}
+.iconbtn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:var(--sea-2);font-weight:800;font-size:15px;min-height:44px}
+.scale{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 22px}
+.scale span{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:var(--sea-deep);color:var(--foam-dim)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:center;text-align:left;padding:16px;border-radius:22px;background:var(--sea-2);min-height:112px;transition:transform .15s}
+.card:active{transform:scale(.97)}
+.badge{grid-row:span 3;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:24px;color:var(--ink)}
+.card h2{font-family:var(--display);font-size:1.3rem;line-height:1.1;margin:0}
+.card .ex{font-size:14px;color:var(--foam-dim)}
+.card .st{font-size:13px;font-weight:800;color:var(--sand);display:flex;gap:8px;align-items:center}
+.card.mix{background:var(--sand);color:var(--ink)}
+.card.mix .ex{color:var(--ink-soft)}.card.mix .st{color:var(--ink)}
+.stars{letter-spacing:2px}
+.foot{margin-top:22px;color:var(--foam-dim);font-size:14px}
+
+/* Play */
+.bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.bar .grow{flex:1;min-width:0}
+.dots{display:flex;gap:6px;flex-wrap:wrap}
+.dot{width:16px;height:16px;border-radius:50%;background:var(--sea-deep);border:2px solid var(--sea-3)}
+.dot.now{border-color:var(--sand)}
+.dot.f{background:var(--kelp);border-color:var(--kelp)}.dot.s{background:var(--sand);border-color:var(--sand)}.dot.x{background:var(--coral);border-color:var(--coral)}
+.pill{padding:8px 14px;border-radius:999px;background:var(--sea-deep);font-weight:800;font-size:15px;white-space:nowrap}
+.pill b{color:var(--sand);font-family:var(--display);font-size:18px}
+.stage{display:grid;gap:16px;grid-template-columns:1fr;align-items:start}
+@media (min-width:900px){.stage{grid-template-columns:minmax(0,1.45fr) minmax(320px,1fr)}}
+.sheet{background:var(--paper);color:var(--ink);border-radius:20px;padding:20px 22px 24px;min-width:0;
+  background-image:linear-gradient(var(--rule) 1px,transparent 1px);background-size:100% 34px;background-position:0 64px;box-shadow:0 14px 30px rgba(0,0,0,.25)}
+.sheet .tag{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);background:var(--paper);padding-right:8px}
+.sheet h3{font-family:var(--display);font-size:1.35rem;line-height:1.2;margin:.2rem 0 .8rem;text-wrap:balance;background:var(--paper);display:inline}
+.qbody{margin-top:14px;font-size:1.15rem;line-height:1.5}
+.qbody p{margin:.4rem 0;background:var(--paper)}
+.eq{font-family:var(--display);font-weight:700;font-size:clamp(1.7rem,4.6vw,2.6rem);line-height:1.35;background:var(--paper);padding:6px 0;overflow-wrap:anywhere}
+.blank{display:inline-block;min-width:2.6em;padding:0 .3em;border-bottom:4px solid var(--coral);color:var(--coral);text-align:center}
+.blank.filled{color:var(--ink)}
+.vert{display:inline-grid;font-family:var(--display);font-weight:700;font-size:2.2rem;line-height:1.25;text-align:right;background:var(--paper);padding:4px 10px}
+.vert .row{padding:0 6px;border-radius:8px}
+.vert .hl{background:var(--sand)}
+.vert .res{border-top:3px solid var(--ink)}
+.glyph{font-family:var(--display);font-weight:800;font-size:clamp(110px,20vw,170px);line-height:1;text-align:center;background:var(--paper);padding:10px 0}
+svg.fig{display:block;width:100%;max-width:440px;height:auto;margin:6px auto;background:var(--paper)}
+.ln{stroke:var(--ink);stroke-width:4;stroke-linecap:round}.ln2{stroke:var(--coral);stroke-width:4;stroke-linecap:round}
+.fillink{fill:var(--ink)}.ra{fill:none;stroke:var(--ink-soft);stroke-width:2}
+.chart .g10{stroke:#cbbf9f;stroke-width:1}.chart .g5{stroke:#e6dcc4;stroke-width:1;stroke-dasharray:3 4}
+.chart .axis{stroke:var(--ink);stroke-width:2}.chart .ax{fill:var(--ink-soft);font:700 11px var(--body)}
+.chart .pl{fill:none;stroke:var(--sea-2);stroke-width:3;stroke-linejoin:round}.chart .pt{fill:var(--sea-2)}
+.chart .drop{stroke:var(--ink-soft);stroke-width:1;stroke-dasharray:2 3}
+.bars{display:flex;flex-direction:column;gap:6px;max-width:460px;margin:10px auto;background:var(--paper)}
+.bars .tot{text-align:center;font-family:var(--display);font-weight:800;font-size:1.3rem;border:2px solid var(--ink);border-bottom:0;border-radius:10px 10px 0 0;padding:2px}
+.bars .cells{display:flex}
+.bars .cells div{flex:1;text-align:center;padding:10px 2px;font-family:var(--display);font-weight:800;font-size:1.25rem;background:var(--sea-2);color:var(--foam);border-right:2px solid var(--paper)}
+.bars .cells div:last-child{border-right:0}
+.bars .q{color:var(--sand)}
+
+.side{display:flex;flex-direction:column;gap:12px;min-width:0}
+.display{background:var(--sea-deep);border-radius:18px;padding:10px 18px;font-family:var(--display);font-weight:800;font-size:2.4rem;text-align:right;min-height:72px;display:flex;align-items:center;justify-content:flex-end;border:3px solid var(--sea-3)}
+.display.empty{color:var(--sea-3)}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.key{min-height:70px;border-radius:18px;background:var(--sea-2);font-family:var(--display);font-weight:800;font-size:2rem;box-shadow:0 5px 0 var(--sea-deep);transition:transform .06s,box-shadow .06s}
+.key:active{transform:translateY(4px);box-shadow:0 1px 0 var(--sea-deep)}
+.key.ok{background:var(--kelp);color:var(--ink);font-size:1.5rem}
+.key.del{background:var(--sea-3);font-size:1.5rem}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.choice{min-height:76px;border-radius:18px;background:var(--sea-2);font-family:var(--display);font-weight:800;font-size:1.5rem;padding:8px 12px;box-shadow:0 5px 0 var(--sea-deep)}
+.choice:active{transform:translateY(4px);box-shadow:0 1px 0 var(--sea-deep)}
+.choice:disabled{opacity:.35;text-decoration:line-through}
+.choice.right{background:var(--kelp);color:var(--ink)}
+.fb{border-radius:18px;padding:14px 16px;font-size:1.05rem;line-height:1.45}
+.fb .big{font-family:var(--display);font-weight:800;font-size:1.6rem;display:block;line-height:1.1;margin-bottom:4px}
+.fb.ok{background:var(--kelp);color:var(--ink)}
+.fb.hint{background:var(--sand);color:var(--ink)}
+.fb.bad{background:var(--coral);color:var(--ink)}
+.fb .ex{font-variant-numeric:tabular-nums}
+.next{min-height:66px;border-radius:18px;background:var(--foam);color:var(--ink);font-family:var(--display);font-weight:800;font-size:1.5rem;box-shadow:0 5px 0 var(--foam-dim)}
+.note{font-size:14px;color:var(--ink-soft);margin-top:10px;background:var(--paper)}
+.shake{animation:shake .35s}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+
+/* End */
+.end{max-width:720px;margin:0 auto;text-align:center}
+.end .sheet{text-align:left;margin-top:16px}
+.bigstars{font-size:clamp(64px,14vw,110px);line-height:1;letter-spacing:8px;margin:10px 0}
+.bigstars i{font-style:normal;color:var(--sea-2);display:inline-block}
+.bigstars i.on{color:var(--sand);animation:pop .5s backwards}
+.bigstars i:nth-child(2){animation-delay:.2s}.bigstars i:nth-child(3){animation-delay:.4s}
+@keyframes pop{0%{transform:scale(0) rotate(-30deg)}70%{transform:scale(1.25)}100%{transform:scale(1)}}
+.level{display:inline-block;font-family:var(--display);font-weight:800;font-size:1.4rem;background:var(--sea-2);padding:6px 18px;border-radius:999px}
+.row-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.row-btns .next{padding:0 26px}
+.row-btns .alt{background:var(--sea-2);color:var(--foam);box-shadow:0 5px 0 var(--sea-deep)}
+.review{margin:0;padding-left:1.1em}
+.review li{margin:.5rem 0;background:var(--paper)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+  <!-- HOME -->
+  <section id="home">
+    <div class="top">
+      <div>
+        <h1>Expedición <span>Mates</span></h1>
+        <p class="lede">Elige una isla para repasar. Cada ronda tiene 10 retos sacados de las fichas S.A. 2 y 3. Si fallas, te doy una pista y lo vuelves a intentar.</p>
+      </div>
+      <button class="iconbtn" id="soundBtn" aria-pressed="true">Sonido: sí</button>
+    </div>
+    <div class="scale" aria-label="Escala de progreso">
+      <span>Necesito repasar</span><span>Un poco difícil</span><span>Voy progresando</span><span>Bien</span><span>Excelente</span>
+    </div>
+    <div class="grid" id="cards"></div>
+    <p class="foot">Tu progreso se guarda en este iPad. Para las multiplicaciones largas, ten a mano papel y lápiz.</p>
+  </section>
+
+  <!-- PLAY -->
+  <section id="play" hidden>
+    <div class="bar">
+      <button class="iconbtn" id="quitBtn">← Mapa</button>
+      <div class="grow"><div class="dots" id="dots"></div></div>
+      <span class="pill">Racha <b id="streak" class="num">0</b></span>
+      <span class="pill">Puntos <b id="points" class="num">0</b></span>
+    </div>
+    <div class="stage">
+      <article class="sheet" id="sheet">
+        <span class="tag" id="qtag"></span><br>
+        <h3 id="qtitle"></h3>
+        <div class="qbody" id="qbody"></div>
+      </article>
+      <div class="side">
+        <div id="numArea">
+          <div class="display empty num" id="display">?</div>
+          <div class="keypad" style="margin-top:12px">
+            <button class="key" data-k="7">7</button><button class="key" data-k="8">8</button><button class="key" data-k="9">9</button>
+            <button class="key" data-k="4">4</button><button class="key" data-k="5">5</button><button class="key" data-k="6">6</button>
+            <button class="key" data-k="1">1</button><button class="key" data-k="2">2</button><button class="key" data-k="3">3</button>
+            <button class="key del" data-k="del" aria-label="Borrar">⌫</button><button class="key" data-k="0">0</button><button class="key ok" data-k="ok">OK</button>
+          </div>
+        </div>
+        <div class="choices" id="choices" hidden></div>
+        <div class="fb" id="fb" hidden></div>
+        <button class="next" id="nextBtn" hidden>Siguiente →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- END -->
+  <section id="end" hidden>
+    <div class="end">
+      <h1 id="endTitle">¡Ronda terminada!</h1>
+      <div class="bigstars" id="bigstars"></div>
+      <span class="level" id="endLevel"></span>
+      <p class="lede" style="margin:12px auto 0" id="endText"></p>
+      <div class="row-btns">
+        <button class="next" id="againBtn">Otra ronda</button>
+        <button class="next alt" id="mapBtn">Volver al mapa</button>
+      </div>
+      <article class="sheet" id="reviewBox" hidden>
+        <span class="tag">Para repasar</span>
+        <ol class="review" id="reviewList"></ol>
+      </article>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+const BOX='<span class="blank">?</span>';
+
+/* ---------- Generators ---------- */
+function gFaltan(){
+  const t=R(0,2);
+  if(t<2){
+    const a=R(1000,6999), x=R(1000,9999-a), c=a+x;
+    const eq=t===0?`${fmt(a)} + ${BOX} = ${fmt(c)}`:`${BOX} + ${fmt(a)} = ${fmt(c)}`;
+    return {title:'Averigua el número que falta.',html:`<div class="eq num">${eq}</div>`,type:'num',answer:x,
+      hint:`¿Cuánto le falta a ${fmt(a)} para llegar a ${fmt(c)}? Haz la resta ${fmt(c)} − ${fmt(a)}.`,
+      explain:`${fmt(c)} − ${fmt(a)} = <b>${fmt(x)}</b>`,plain:eq.replace(BOX,'?')};
+  }
+  const c=R(4000,9999), x=R(1000,c-1000), d=c-x;
+  const eq=`${fmt(c)} − ${BOX} = ${fmt(d)}`;
+  return {title:'Averigua el número que falta.',html:`<div class="eq num">${eq}</div>`,type:'num',answer:x,
+    hint:`Para saber cuánto se ha quitado, resta ${fmt(c)} − ${fmt(d)}.`,
+    explain:`${fmt(c)} − ${fmt(d)} = <b>${fmt(x)}</b>`,plain:eq.replace(BOX,'?')};
+}
+
+function chain(items,ops){let cur=items[0].val;const steps=[];ops.forEach((o,i)=>{const v=items[i+1].val,nv=o==='+'?cur+v:cur-v;steps.push(`${fmt(cur)} ${o} ${fmt(v)} = ${fmt(nv)}`);cur=nv});return {val:cur,steps}}
+const exprTxt=(items,ops)=>items[0].txt+ops.map((o,i)=>` ${o} ${items[i+1].txt}`).join('');
+function gComb(){
+  if(Math.random()<0.4){
+    let cur=R(10,40);const items=[{txt:String(cur),val:cur}],ops=[];const n=R(3,4);
+    for(let i=0;i<n;i++){const o=(cur>12&&Math.random()<0.5)?'−':'+';const k=o==='+'?R(2,30):R(2,Math.min(cur-1,20));items.push({txt:String(k),val:k});ops.push(o);cur=o==='+'?cur+k:cur-k}
+    const ch=chain(items,ops);const e=exprTxt(items,ops);
+    return {title:'Calcula estas operaciones combinadas.',html:`<div class="eq num">${e} = ${BOX}</div>`,type:'num',answer:ch.val,
+      hint:'Solo hay sumas y restas: calcula en orden, de izquierda a derecha.',explain:ch.steps.join('<br>'),plain:e};
+  }
+  let items,ops,ch;
+  do{
+    if(Math.random()<0.5){
+      const a=R(2,9),b=R(2,9),c=R(10,150),d=R(10,150),e=R(30,99),f=R(5,e-5);
+      items=[{txt:`(${a} × ${b})`,val:a*b,p:1},{txt:`(${c} + ${d})`,val:c+d,p:1},{txt:`(${e} − ${f})`,val:e-f,p:1}];ops=['+','−'];
+    }else{
+      const a=R(5,30)*10,b=R(2,20)*10,c=R(2,9),d=R(2,9),g=R(5,30),e=R(5,30),f=R(5,30);
+      items=[{txt:`(${a} + ${b})`,val:a+b,p:1},{txt:`(${c} × ${d})`,val:c*d,p:1},{txt:String(g),val:g},{txt:`(${e} + ${f})`,val:e+f,p:1}];ops=['−','+','−'];
+    }
+    ch=chain(items,ops);
+  }while(ch.val<0);
+  const e=exprTxt(items,ops);
+  const pl=items.filter(i=>i.p).map(i=>`${i.txt} = ${fmt(i.val)}`).join('<br>');
+  const flat=items[0].val+ops.map((o,i)=>` ${o} ${items[i+1].val}`).join('');
+  return {title:'Calcula. Recuerda: primero lo que está entre paréntesis.',html:`<div class="eq num" style="font-size:clamp(1.4rem,3.8vw,2.1rem)">${e} = ${BOX}</div>`,type:'num',answer:ch.val,
+    hint:'Resuelve primero cada paréntesis. Después, suma y resta de izquierda a derecha.',
+    explain:`${pl}<br>Ahora: ${flat}<br>${ch.steps.join('<br>')}`,plain:e};
+}
+
+function decomp(n){
+  const um=Math.floor(n/1000),c=Math.floor(n/100)%10,d=Math.floor(n/10)%10,u=n%10,r=pick([0,1,2]);
+  let parts;
+  if(r===0)parts=[[um,'UM',1000],[n%1000,'U',1]];
+  else if(r===1)parts=[[Math.floor(n/100),'C',100],[d,'D',10],[u,'U',1]];
+  else parts=[[um,'UM',1000],[c,'C',100],[d,'D',10],[u,'U',1]];
+  parts=parts.filter(p=>p[0]>0);
+  return {txt:parts.map(p=>`${fmt(p[0])} ${p[1]}`).join(' + '),ex:parts.map(p=>`${fmt(p[0])} ${p[1]} = ${fmt(p[0]*p[2])}`).join('<br>')};
+}
+function gValor(){
+  const t=R(0,2), n=R(1000,9999);
+  if(t===0){const dc=decomp(n);
+    return {title:'Escribe el número.',html:`<div class="eq num">${dc.txt} = ${BOX}</div>`,type:'num',answer:n,
+      hint:'Recuerda: 1 UM = 1 000 U, 1 C = 100 U y 1 D = 10 U. Pasa cada parte a unidades y suma.',
+      explain:`${dc.ex}<br>Total: <b>${fmt(n)}</b>`,plain:`${dc.txt} = ?`};}
+  if(t===1){
+    let m=n;
+    if(Math.random()<0.5){do{m=n+pick([-1000,-100,-10,10,100,1000,90,-90,9])}while(m<1000||m>9999)}
+    const dc=decomp(m), ans=m===n?'=':'≠';
+    return {title:'¿Es igual (=) o distinto (≠)?',html:`<div class="eq num">${fmt(n)} &nbsp;<span style="color:var(--coral)">◯</span>&nbsp; ${dc.txt}</div>`,type:'choice',choices:['=','≠'],answer:ans,
+      hint:'Pasa la parte de la derecha a un número normal y compara cifra a cifra.',
+      explain:`${dc.ex}<br>${dc.txt} = ${fmt(m)}, así que ${fmt(n)} <b>${ans}</b> ${fmt(m)}`,plain:`${fmt(n)} ◯ ${dc.txt}`};
+  }
+  let k=n;while(k%100===0)k=R(1000,9999);
+  const d=Math.floor(k/10)%10, ans=Math.round(k/100)*100;
+  return {title:'Aproxima a la centena.',html:`<div class="eq num">${fmt(k)} → ${BOX}</div>`,type:'num',answer:ans,
+    hint:`Mira la cifra de las decenas (${d}). Si es 5 o más, la centena sube; si es menor, se queda igual y lo de detrás pasa a ser 0.`,
+    explain:`La cifra de las decenas es ${d}, ${d>=5?'que es 5 o más: subimos':'que es menor que 5: se queda'}. <b>${fmt(ans)}</b>`,plain:`Aproxima ${fmt(k)} a la centena`};
+}
+
+function gMulti(){
+  const t=R(0,3);
+  if(t===0){const a=R(1000,4999),b=R(2,9);
+    return {title:'Multiplica por una cifra.',html:`<div class="eq num">${fmt(a)} × ${b} = ${BOX}</div><p class="note">Puedes hacerlo en vertical en un papel.</p>`,type:'num',answer:a*b,
+      hint:`Multiplica ${b} por cada cifra empezando por las unidades, y no olvides sumar lo que te llevas.`,
+      explain:`${fmt(a)} × ${b} = <b>${fmt(a*b)}</b>`,plain:`${fmt(a)} × ${b}`};}
+  if(t===1){const a=R(40,999);let b;do{b=R(12,39)}while(b%10===0);const tn=b-b%10,u=b%10;
+    return {title:'Multiplica por dos cifras.',html:`<div class="eq num">${fmt(a)} × ${b} = ${BOX}</div><p class="note">Usa papel y lápiz si lo necesitas.</p>`,type:'num',answer:a*b,
+      hint:`Descompón ${b} = ${tn} + ${u}. Calcula ${fmt(a)} × ${tn} y ${fmt(a)} × ${u}, y luego súmalos.`,
+      explain:`${fmt(a)} × ${tn} = ${fmt(a*tn)}<br>${fmt(a)} × ${u} = ${fmt(a*u)}<br>${fmt(a*tn)} + ${fmt(a*u)} = <b>${fmt(a*b)}</b>`,plain:`${fmt(a)} × ${b}`};}
+  if(t===2){const a=R(21,99),b=R(11,29);const bb=b%10===0?b+1:b,tn=bb-bb%10,u=bb%10;
+    return {title:'Multiplica en horizontal descomponiendo.',html:`<div class="eq num" style="font-size:clamp(1.4rem,3.8vw,2.1rem)">${a} × ${bb} = (${a} × ${tn}) + (${a} × ${u})<br>= ${BOX} + ${fmt(a*u)}</div>`,type:'num',answer:a*tn,
+      hint:`El hueco es ${a} × ${tn}. Truco: multiplica ${a} × ${tn/10} y añade un 0.`,
+      explain:`${a} × ${tn} = <b>${fmt(a*tn)}</b>. Y el total: ${fmt(a*tn)} + ${fmt(a*u)} = ${fmt(a*bb)}`,plain:`${a} × ${tn}`};}
+  const a=R(100,999),b=R(2,9),row=R(0,2),ans=row<2?'factor':'producto';
+  const rows=[fmt(a),'× '+b,fmt(a*b)].map((v,i)=>`<div class="row ${i===row?'hl':''} ${i===2?'res':''}">${v}</div>`).join('');
+  return {title:'¿Cómo se llama el número marcado en amarillo?',html:`<div style="text-align:center"><div class="vert num">${rows}</div></div>`,type:'choice',choices:['factor','producto','sumando'],answer:ans,
+    hint:'En una multiplicación, los números que se multiplican tienen un nombre y el resultado tiene otro.',
+    explain:'Los números que se multiplican son los <b>factores</b> y el resultado es el <b>producto</b>.',plain:'Términos de la multiplicación'};
+}
+
+const SYM='AHMTUVWXYOBCDEI'.split(''), NOSYM='FGJLNPQRSZ'.split('');
+function gGeo(){
+  const t=R(0,2);
+  if(t===0){
+    const k=pick(['recta','semirrecta','segmento']),x1=50,x2=270,y=45,rot=R(-15,15),flip=Math.random()<.5;
+    const dot=x=>`<circle cx="${x}" cy="${y}" r="7" class="fillink"/>`;
+    const arR=x=>`<polygon points="${x+4},${y} ${x-12},${y-10} ${x-12},${y+10}" class="fillink"/>`;
+    const arL=x=>`<polygon points="${x-4},${y} ${x+12},${y-10} ${x+12},${y+10}" class="fillink"/>`;
+    let ends=k==='segmento'?dot(x1)+dot(x2):k==='recta'?arL(x1)+arR(x2):(flip?arL(x1)+dot(x2):dot(x1)+arR(x2));
+    const svg=`<svg class="fig" viewBox="0 0 320 90" role="img" aria-label="Línea"><g transform="rotate(${rot} 160 45)"><line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" class="ln"/>${ends}</g></svg>`;
+    return {title:'¿Es una recta, una semirrecta o un segmento?',html:svg,type:'choice',choices:['recta','semirrecta','segmento'],answer:k,
+      hint:'Fíjate en los extremos: los puntos marcan dónde empieza o acaba, y las flechas dicen que sigue sin fin.',
+      explain:'Segmento: dos puntos, empieza y acaba. Semirrecta: un punto de origen y sigue sin fin hacia un lado. Recta: sin principio ni fin.<br>Esta es una <b>'+k+'</b>.',plain:'Recta, semirrecta o segmento'};
+  }
+  if(t===1){
+    const k=pick(['paralelas','perpendiculares','secantes']),cx=160,cy=120,L=110;
+    const ln=(px,py,deg,cls)=>{const r=deg*Math.PI/180,dx=Math.cos(r)*L,dy=Math.sin(r)*L;return `<line x1="${(px-dx).toFixed(1)}" y1="${(py-dy).toFixed(1)}" x2="${(px+dx).toFixed(1)}" y2="${(py+dy).toFixed(1)}" class="${cls}"/>`};
+    let s='';const th=R(-25,25);
+    if(k==='paralelas'){const r=th*Math.PI/180,nx=-Math.sin(r)*40,ny=Math.cos(r)*40;s=ln(cx+nx,cy+ny,th,'ln')+ln(cx-nx,cy-ny,th,'ln2')}
+    else if(k==='perpendiculares'){const r=th*Math.PI/180,u=[Math.cos(r),Math.sin(r)],v=[-Math.sin(r),Math.cos(r)],a=16;
+      s=ln(cx,cy,th,'ln')+ln(cx,cy,th+90,'ln2')+`<path d="M${cx+a*u[0]} ${cy+a*u[1]} L${cx+a*u[0]+a*v[0]} ${cy+a*u[1]+a*v[1]} L${cx+a*v[0]} ${cy+a*v[1]}" class="ra"/>`}
+    else{s=ln(cx,cy,th,'ln')+ln(cx,cy,th+pick([R(30,58),R(122,150)]),'ln2')}
+    return {title:'¿Cómo son estas dos rectas?',html:`<svg class="fig" viewBox="0 0 320 240" role="img" aria-label="Dos rectas">${s}</svg>`,type:'choice',choices:['paralelas','perpendiculares','secantes'],answer:k,
+      hint:'Paralelas: nunca se cortan. Perpendiculares: se cortan formando cuatro esquinas iguales (ángulos rectos). Secantes: se cortan pero sin esquinas rectas.',
+      explain:'Son <b>'+k+'</b>.',plain:'Paralelas, perpendiculares o secantes'};
+  }
+  const sym=Math.random()<.5,L=sym?pick(SYM):pick(NOSYM);
+  return {title:'¿Tiene esta letra eje de simetría?',html:`<div class="glyph">${L}</div>`,type:'choice',choices:['Sí','No'],answer:sym?'Sí':'No',
+    hint:'Imagina que doblas la letra por la mitad (de arriba abajo o de lado a lado). ¿Coinciden las dos partes?',
+    explain:sym?`Sí: si doblas la ${L} por la mitad, las dos partes coinciden.`:`No: doblando la ${L} por cualquier lado, las dos mitades no coinciden.`,plain:`Simetría de la letra ${L}`};
+}
+
+const DAYS=['Lunes','Martes','Miércoles','Jueves','Viernes'];
+function chartSVG(vals){
+  const W=360,H=230,L=44,Rr=348,T=14,B=190,y=v=>B-(v/40)*(B-T),x=i=>L+32+i*62;
+  let s=`<svg viewBox="0 0 ${W} ${H}" class="fig chart" role="img" aria-label="Gráfico de líneas: minutos por día">`;
+  for(let v=0;v<=40;v+=5){s+=`<line x1="${L}" x2="${Rr}" y1="${y(v)}" y2="${y(v)}" class="${v%10?'g5':'g10'}"/>`;if(v%10===0)s+=`<text x="${L-8}" y="${y(v)+4}" class="ax" text-anchor="end">${v}</text>`}
+  s+=`<line x1="${L}" x2="${L}" y1="${T}" y2="${B}" class="axis"/><line x1="${L}" x2="${Rr}" y1="${B}" y2="${B}" class="axis"/>`;
+  s+=`<text transform="translate(13 ${(T+B)/2}) rotate(-90)" class="ax" text-anchor="middle">Minutos</text>`;
+  vals.forEach((v,i)=>{s+=`<line x1="${x(i)}" x2="${x(i)}" y1="${y(v)}" y2="${B}" class="drop"/>`});
+  s+=`<polyline points="${vals.map((v,i)=>x(i)+','+y(v)).join(' ')}" class="pl"/>`;
+  vals.forEach((v,i)=>{s+=`<circle cx="${x(i)}" cy="${y(v)}" r="5.5" class="pt"/><text x="${x(i)}" y="${B+20}" class="ax" text-anchor="middle">${DAYS[i]}</text>`});
+  return s+'</svg>';
+}
+function gGraf(){
+  const name=pick(['Lucía','Hugo','Martina','Leo','Vega','Unai','Carla','Mateo']);
+  const t=R(0,5);const V=[5,10,15,20,25,30,35];let vals,ok;
+  do{vals=DAYS.map(()=>pick(V));
+    const mx=Math.max(...vals),cnt={};vals.forEach(v=>cnt[v]=(cnt[v]||0)+1);
+    const top=Math.max(...Object.values(cnt)),modes=Object.keys(cnt).filter(k=>cnt[k]===top);
+    ok=(t!==2||vals.filter(v=>v===mx).length===1)&&(t!==4||(top>=2&&modes.length===1));
+  }while(!ok);
+  const head=`<p>${name} apuntó cuántos minutos leyó cada día, de lunes a viernes.</p>${chartSVG(vals)}`;
+  if(t===0){const i=R(0,4);return {title:'Busca el dato en el gráfico.',html:head+`<p><b>¿Cuántos minutos leyó el ${DAYS[i].toLowerCase()}?</b></p>`,type:'num',answer:vals[i],
+    hint:'Sube desde el día hasta el punto y mira a qué altura está. Las líneas punteadas finas marcan los 5.',explain:`El ${DAYS[i].toLowerCase()} leyó <b>${vals[i]}</b> minutos.`,plain:`Minutos del ${DAYS[i].toLowerCase()}`}}
+  if(t===1){const s=vals.reduce((a,b)=>a+b,0);return {title:'Busca los datos y calcula.',html:head+'<p><b>¿Cuántos minutos leyó en total de lunes a viernes?</b></p>',type:'num',answer:s,
+    hint:'Apunta los minutos de cada día y súmalos todos.',explain:`${vals.join(' + ')} = <b>${s}</b>`,plain:'Total de minutos'}}
+  if(t===2){const mx=Math.max(...vals),d=DAYS[vals.indexOf(mx)];return {title:'Busca el dato en el gráfico.',html:head+'<p><b>¿Qué día leyó más minutos?</b></p>',type:'choice',choices:DAYS,answer:d,
+    hint:'Busca el punto más alto de la línea.',explain:`El punto más alto es el del <b>${d.toLowerCase()}</b>, con ${mx} minutos.`,plain:'Día con más minutos'}}
+  if(t===3){const j=R(0,4),s=vals[j]*2,k=R(1,Math.min(3,s/5-1))*5,dom=s-k;
+    return {title:'Busca el dato y resuelve.',html:head+`<p><b>El sábado leyó el doble de minutos que el ${DAYS[j].toLowerCase()}, y el domingo ${k} minutos menos que el sábado. ¿Cuántos minutos leyó el domingo?</b></p>`,type:'num',answer:dom,
+      hint:`Primero mira el ${DAYS[j].toLowerCase()} en el gráfico. El doble es multiplicar por 2. Luego resta ${k}.`,
+      explain:`${DAYS[j]}: ${vals[j]}. Sábado: ${vals[j]} × 2 = ${s}. Domingo: ${s} − ${k} = <b>${dom}</b>`,plain:'Doble y resta (sábado y domingo)'}}
+  if(t===4){const cnt={};vals.forEach(v=>cnt[v]=(cnt[v]||0)+1);const m=+Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a])[0];
+    return {title:'Busca los datos en el gráfico.',html:head+'<p><b>¿Cuál es la moda de los minutos de lectura?</b></p>',type:'num',answer:m,
+      hint:'La moda es el dato que más se repite. Apunta los minutos de cada día y mira cuál sale más veces.',
+      explain:`Los datos son ${vals.join(', ')}. El que más se repite es <b>${m}</b> (${cnt[m]} veces).`,plain:'Moda'}}
+  let a,b;do{a=R(0,4);b=R(0,4)}while(vals[a]<=vals[b]);
+  return {title:'Busca los datos y compara.',html:head+`<p><b>¿Cuántos minutos más leyó el ${DAYS[a].toLowerCase()} que el ${DAYS[b].toLowerCase()}?</b></p>`,type:'num',answer:vals[a]-vals[b],
+    hint:'Mira los minutos de los dos días y resta el grande menos el pequeño.',explain:`${vals[a]} − ${vals[b]} = <b>${vals[a]-vals[b]}</b>`,plain:'Diferencia entre dos días'};
+}
+
+const ITEMS=[['trajes de neopreno','cada uno'],['botellas de aire','cada una'],['gafas de buceo','cada una'],['pares de aletas','cada par'],['linternas','cada una'],['mochilas','cada una']];
+function gProb(){
+  const t=R(0,3);
+  if(t===0){const it=pick(ITEMS),p=R(12,240),q=R(3,28),who=pick(['Jacinto','Alma','Bruno','Noa']);
+    return {title:'Resuelve el problema.',html:`<p>${who} quiere comprar <b>${q} ${it[0]}</b> para su escuela. Cuestan <b>${p} €</b> ${it[1]}.</p><p><b>¿Cuánto gastará en total?</b></p><p class="note">Respuesta en euros.</p>`,type:'num',answer:p*q,
+      hint:`Total = precio por unidad × cantidad. Calcula ${p} × ${q}.`,explain:`${p} × ${q} = <b>${fmt(p*q)} €</b>`,plain:`${q} ${it[0]} a ${p} €`};}
+  if(t===1){const k=R(3,6),v=R(12,250);
+    if(Math.random()<.5){
+      const bars=`<div class="bars num"><div class="tot q">? metros</div><div class="cells">${Array(k).fill(`<div>${v}</div>`).join('')}</div></div>`;
+      return {title:'Problema con barras.',html:`<p>Una ruta de buceo tiene <b>${k} tramos iguales</b> de <b>${v} metros</b> cada uno. ¿Cuántos metros mide la ruta entera?</p>${bars}`,type:'num',answer:k*v,
+        hint:`Hay ${k} partes iguales de ${v}. Puedes sumar ${v} ${k} veces o multiplicar ${v} × ${k}.`,explain:`${v} × ${k} = <b>${fmt(k*v)}</b> metros`,plain:`${k} tramos de ${v} m`};}
+    const T=k*v,bars=`<div class="bars num"><div class="tot">${fmt(T)} cromos</div><div class="cells">${Array(k).fill('<div class="q">?</div>').join('')}</div></div>`;
+    return {title:'Problema con barras.',html:`<p><b>${k} amigos</b> se reparten <b>${fmt(T)} cromos</b> en partes iguales. ¿Cuántos cromos le tocan a cada uno?</p>${bars}`,type:'num',answer:v,
+      hint:`Hay que repartir ${fmt(T)} entre ${k}: es una división. Pista: ¿qué número multiplicado por ${k} da ${fmt(T)}?`,explain:`${fmt(T)} : ${k} = <b>${v}</b>, porque ${v} × ${k} = ${fmt(T)}`,plain:`Repartir ${T} entre ${k}`};}
+  if(t===2){const a=R(10,30),b=R(5,15),c=R(2,8),d=R(2,8),r=a+b-c-d;
+    return {title:'Resuelve con una operación combinada.',html:`<p>Para una expedición prepararon <b>${a} bocadillos</b>. Luego añadieron <b>${b}</b> más. Por el camino se comieron <b>${c}</b> y después otros <b>${d}</b>.</p><p><b>¿Cuántos bocadillos quedan?</b></p>`,type:'num',answer:r,
+      hint:'Escríbelo como una sola operación: lo que añaden suma y lo que se comen resta. Calcula de izquierda a derecha.',explain:`${a} + ${b} − ${c} − ${d} = <b>${r}</b>`,plain:'Bocadillos'};}
+  if(Math.random()<.5){const a=R(12,30),b=R(3,a-2),c=R(1,b),r=a-b+c;
+    return {title:'Resuelve con una operación combinada.',html:`<p>En el monte colocaron <b>${a} casas para pájaros</b>. La nieve tiró <b>${b}</b>. Hoy han repuesto <b>${c}</b>.</p><p><b>¿Cuántas casas hay ahora?</b></p>`,type:'num',answer:r,
+      hint:'Las que tira la nieve restan y las que reponen suman. De izquierda a derecha.',explain:`${a} − ${b} + ${c} = <b>${r}</b>`,plain:'Casas para pájaros'};}
+  const x=R(10,30),y=R(10,30),p=R(5,15),q=R(5,x+y-p-1),r=x+y-p-q;
+  return {title:'Resuelve con una operación combinada.',html:`<p>Un voluntario llevó <b>${x} bolsas</b> de basura y otro llevó <b>${y}</b>. Llenaron <b>${p}</b> en una zona y <b>${q}</b> en otra.</p><p><b>¿Cuántas bolsas sobraron?</b></p>`,type:'num',answer:r,
+    hint:'Primero junta las bolsas que llevaron (suma). Luego quita las que llenaron (resta).',explain:`${x} + ${y} − ${p} − ${q} = <b>${r}</b>`,plain:'Bolsas de basura'};
+}
+
+const TOPICS=[
+  {id:'faltan',name:'El número que falta',ex:'2 345 + ? = 5 790',badge:'?',color:'#f5c85c',gen:gFaltan},
+  {id:'comb',name:'Operaciones combinadas',ex:'(8 × 4) + (36 + 110)',badge:'( )',color:'#ffa588',gen:gComb},
+  {id:'valor',name:'UM, C, D y U',ex:'5 UM + 238 U · aproximar',badge:'UM',color:'#8fd6ff',gen:gValor},
+  {id:'multi',name:'Multiplicar',ex:'1 234 × 23 · factores',badge:'×',color:'#57cf8a',gen:gMulti},
+  {id:'geo',name:'Rectas y simetría',ex:'recta, semirrecta, segmento',badge:'↔',color:'#c9a7ff',gen:gGeo},
+  {id:'graf',name:'Gráficos',ex:'leer datos · la moda',badge:'▁▅▃',color:'#ffc2d4',gen:gGraf},
+  {id:'prob',name:'Problemas',ex:'precios, barras, bocadillos',badge:'€',color:'#7fe0c8',gen:gProb},
+];
+const MIX={id:'mix',name:'Gran repaso',ex:'Un poco de todo, como en la ficha',badge:'★',color:'#0c3446'};
+const LEVELS=['Necesito repasar','Un poco difícil','Voy progresando','Bien','Excelente'];
+const levelOf=p=>p<.4?0:p<.6?1:p<.75?2:p<.9?3:4;
+const starsOf=p=>p>=.9?3:p>=.7?2:p>=.4?1:0;
+const starStr=n=>'★'.repeat(n)+'☆'.repeat(3-n);
+
+/* ---------- Storage ---------- */
+const KEY='expedicion-mates-v1';
+let store={best:{},sound:true};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.best)store=Object.assign(store,s)}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}};
+
+/* ---------- Sound ---------- */
+let actx=null;
+function tone(freqs,dur,type){if(!store.sound)return;try{actx=actx||new(window.AudioContext||window.webkitAudioContext)();const t0=actx.currentTime;
+  freqs.forEach((f,i)=>{const o=actx.createOscillator(),g=actx.createGain(),t=t0+i*dur;o.type=type||'sine';o.frequency.value=f;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.18,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);o.connect(g);g.connect(actx.destination);o.start(t);o.stop(t+dur+0.03)})}catch(e){}}
+const sOk=()=>tone([523,659,784],0.11),sBad=()=>tone([300,220],0.14,'triangle'),sWin=()=>tone([523,659,784,1047],0.14);
+
+/* ---------- UI ---------- */
+const $=id=>document.getElementById(id);
+const show=id=>['home','play','end'].forEach(s=>$(s).hidden=s!==id);
+function renderHome(){
+  $('cards').innerHTML=[...TOPICS,MIX].map(t=>{const b=store.best[t.id];
+    const st=b==null?'<span>Sin empezar</span>':`<span class="stars">${starStr(starsOf(b))}</span><span>${LEVELS[levelOf(b)]}</span>`;
+    return `<button class="card ${t.id==='mix'?'mix':''}" data-t="${t.id}"><span class="badge" style="background:${t.id==='mix'?'var(--sea)':t.color};${t.id==='mix'?'color:var(--sand)':''}">${t.badge}</span><h2>${t.name}</h2><span class="ex num">${t.ex}</span><span class="st">${st}</span></button>`}).join('');
+  updSound();show('home');window.scrollTo(0,0);
+}
+function updSound(){$('soundBtn').textContent='Sonido: '+(store.sound?'sí':'no');$('soundBtn').setAttribute('aria-pressed',String(store.sound))}
+$('soundBtn').onclick=()=>{store.sound=!store.sound;save();updSound();sOk()};
+$('cards').onclick=e=>{const c=e.target.closest('.card');if(c)start(c.dataset.t)};
+
+const N=10;let G=null;
+function start(id){
+  const topic=id==='mix'?MIX:TOPICS.find(t=>t.id===id);
+  const gens=id==='mix'?shuffle([...TOPICS,...TOPICS]).slice(0,N).map(t=>t.gen):Array(N).fill(topic.gen);
+  G={id,topic,qs:gens.map(g=>{const q=g();q.topicName=(TOPICS.find(t=>t.gen===g)||topic).name;return q}),i:0,score:0,firsts:0,points:0,streak:0,bestStreak:0,res:[],misses:[]};
+  $('points').textContent='0';$('streak').textContent='0';
+  show('play');renderQ();
+}
+function renderDots(){$('dots').innerHTML=G.qs.map((_,i)=>`<span class="dot ${G.res[i]||''} ${i===G.i?'now':''}"></span>`).join('')}
+function renderQ(){
+  const q=G.qs[G.i];G.att=0;G.input='';G.locked=false;
+  $('qtag').textContent=`${q.topicName} · Reto ${G.i+1} de ${N}`;
+  $('qtitle').textContent=q.title;$('qbody').innerHTML=q.html;
+  $('fb').hidden=true;$('nextBtn').hidden=true;
+  const isNum=q.type==='num';$('numArea').hidden=!isNum;$('choices').hidden=isNum;
+  if(!isNum)$('choices').innerHTML=q.choices.map(c=>`<button class="choice" data-c="${c}">${c}</button>`).join('');
+  updInput();renderDots();window.scrollTo({top:0,behavior:'smooth'});
+}
+function updInput(){
+  const v=G.input,d=$('display');d.textContent=v?fmt(v):'?';d.classList.toggle('empty',!v);
+  const b=$('qbody').querySelector('.blank');if(b){b.textContent=v?fmt(v):'?';b.classList.toggle('filled',!!v)}
+}
+function press(k){
+  if(!G||G.locked||G.qs[G.i].type!=='num')return;
+  if(k==='del')G.input=G.input.slice(0,-1);
+  else if(k==='ok'){if(G.input)submit(Number(G.input));return}
+  else if(G.input.length<7)G.input=(G.input+k).replace(/^0+(?=\d)/,'');
+  updInput();
+}
+document.querySelector('.keypad').onclick=e=>{const b=e.target.closest('.key');if(b)press(b.dataset.k)};
+$('choices').onclick=e=>{const b=e.target.closest('.choice');if(b&&!b.disabled&&!G.locked){G.lastBtn=b;submit(b.dataset.c)}};
+document.addEventListener('keydown',e=>{
+  if($('play').hidden)return;
+  if(G.locked&&(e.key==='Enter'||e.key===' ')){e.preventDefault();next();return}
+  if(/^[0-9]$/.test(e.key))press(e.key);else if(e.key==='Backspace')press('del');else if(e.key==='Enter')press('ok');
+});
+const PRAISE=['¡Muy bien!','¡Genial!','¡Eso es!','¡Perfecto!','¡Crack!','¡Bravo!'];
+function submit(val){
+  const q=G.qs[G.i],right=val===q.answer,fb=$('fb');
+  if(right){
+    const first=G.att===0;G.score+=first?1:.5;if(first)G.firsts++;G.streak++;G.bestStreak=Math.max(G.bestStreak,G.streak);
+    G.points+=(first?10:5)+(G.streak>=3?2:0);G.res[G.i]=first?'f':'s';G.locked=true;
+    if(q.type==='choice')G.lastBtn.classList.add('right');
+    fb.className='fb ok';fb.innerHTML=`<span class="big">${pick(PRAISE)}${G.streak>=3?' Racha de '+G.streak:''}</span><span class="ex">${q.explain}</span>`;
+    $('nextBtn').hidden=false;sOk();
+  }else if(G.att===0){
+    G.att=1;G.streak=0;fb.className='fb hint';fb.innerHTML=`<span class="big">¡Casi! Prueba otra vez</span>${q.hint}`;
+    if(q.type==='choice')G.lastBtn.disabled=true;else{G.input='';updInput()}
+    const s=$('sheet');s.classList.remove('shake');void s.offsetWidth;s.classList.add('shake');sBad();
+  }else{
+    G.streak=0;G.res[G.i]='x';G.locked=true;G.misses.push({t:q.topicName,p:q.plain,a:typeof q.answer==='number'?fmt(q.answer):q.answer});
+    if(q.type==='choice'){G.lastBtn.disabled=true;const rb=[...document.querySelectorAll('.choice')].find(b=>b.dataset.c===q.answer);if(rb)rb.classList.add('right')}
+    else{G.input=String(q.answer);updInput()}
+    fb.className='fb bad';fb.innerHTML=`<span class="big">La respuesta era ${typeof q.answer==='number'?fmt(q.answer):q.answer}</span><span class="ex">${q.explain}</span>`;
+    $('nextBtn').hidden=false;sBad();
+  }
+  fb.hidden=false;$('streak').textContent=G.streak;$('points').textContent=G.points;renderDots();
+  if(G.locked&&window.innerWidth<900)setTimeout(()=>$('nextBtn').scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+}
+function next(){if(!G.locked)return;G.i++;if(G.i>=N)finish();else renderQ()}
+$('nextBtn').onclick=next;
+$('quitBtn').onclick=()=>{G=null;renderHome()};
+function finish(){
+  const p=G.score/N,st=starsOf(p),lv=levelOf(p);
+  if(store.best[G.id]==null||p>store.best[G.id]){store.best[G.id]=p;save()}
+  $('endTitle').textContent=st===3?'¡Ronda perfecta!':st>=2?'¡Muy buena ronda!':st===1?'¡Ronda terminada!':'¡Sigue practicando!';
+  $('bigstars').innerHTML=[0,1,2].map(i=>`<i class="${i<st?'on':''}">★</i>`).join('');
+  $('endLevel').textContent=LEVELS[lv];
+  $('endText').textContent=`${G.firsts} de ${N} a la primera · ${G.points} puntos · mejor racha: ${G.bestStreak}`;
+  $('reviewBox').hidden=!G.misses.length;
+  $('reviewList').innerHTML=G.misses.map(m=>`<li><b>${m.t}:</b> <span class="num">${m.p}</span> → <b class="num">${m.a}</b></li>`).join('');
+  show('end');window.scrollTo(0,0);if(st>0)sWin();
+}
+$('againBtn').onclick=()=>start(G.id);
+$('mapBtn').onclick=renderHome;
+renderHome();
+})();
+</script>
+
+</body>
+</html>
