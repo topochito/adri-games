@@ -74,6 +74,34 @@ h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance}
 .htabs button span{font-size:2.4rem;line-height:1}.htabs button b{font-family:var(--display);font-size:1.5rem}.htabs button small{font-weight:700;color:var(--muted);font-size:.85rem}
 .htabs button[aria-pressed="true"]{border-color:#f5b800;background:#fff8e1;box-shadow:0 5px 0 #f5b800}
 .flowmini{color:var(--muted);font-weight:700;font-size:.9rem;margin:0 0 10px}.flowmini .c1{color:var(--comp)}.flowmini .c2{color:var(--pien)}.flowmini .c3{color:var(--resu)}.flowmini .c4{color:var(--ok)}
+.hpill{background:#fff!important;color:#0d3a8f!important;border-radius:999px;padding:6px 14px;font-size:1rem!important}
+.starcount{background:#fff;color:#0d3a8f;border-radius:999px;padding:6px 14px;font-weight:800;font-size:1.1rem}
+.board{display:flex;align-items:center;justify-content:center;gap:16px;background:#24343a;background-image:radial-gradient(circle at 30% 20%,#33474e,#1f2d33);border:7px solid #b8864b;border-radius:18px;color:#fff;font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,4vw,2.3rem);padding:12px;margin:0 0 14px;box-shadow:0 6px 0 #8a6232}
+.board .bi{font-size:1.6rem}
+.htabs button{flex-direction:row!important;justify-content:center;gap:14px!important;text-align:left}
+.htabs button div{display:flex;flex-direction:column}
+.htabs .tb-t{background:#e8f1ff!important;border-color:#2c74d8!important;box-shadow:0 5px 0 #2c74d8!important}
+.htabs .tb-p{background:#fff4cc!important;border-color:#f5b800!important;box-shadow:0 5px 0 #d99a00!important}
+.htabs button[aria-pressed="false"]{opacity:.6}.htabs button[aria-pressed="true"]{outline:4px solid #fff;outline-offset:-9px}
+.fichasel button,.tcard{position:relative;flex-direction:row!important;align-items:center;gap:12px!important;min-height:118px;background:#fff!important}
+.fichasel .mb,.tcard .mb{display:flex;flex-direction:column;gap:3px;min-width:0}
+.art{flex:none;width:84px;height:84px;display:grid;place-items:center;font-size:3.3rem;line-height:1;background:#eef5ff;border-radius:18px}
+.fichasel .mn{align-self:flex-start;background:var(--comp);color:#fff!important;border-radius:999px;padding:2px 10px}
+.temasg,.fichasel{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))!important}
+.tcard .art,.fichasel .art{font-size:3.3rem!important}.tcard .stars{font-size:1.05rem!important}.tcard .mb>span:last-child{font-size:.85rem}
+.stars{color:#f5b800;letter-spacing:1px;font-size:1.05rem}.stars i{color:#c9cfdb;font-style:normal}
+.isdone .stars{color:#9aa3b2}
+.fichasel button.isdone,.tcard.isdone,.isdone{background:#e9ecf1!important;border-color:#c7cdd8!important;box-shadow:0 4px 0 #c7cdd8!important}
+.isdone .art{filter:grayscale(1);opacity:.5}.isdone .mt,.isdone b{color:#7a8496!important}.isdone .mn{background:#9aa3b2!important}
+.dbadge{position:absolute;top:8px;right:10px;background:var(--ok);color:#fff;font-weight:800;font-size:.8rem;border-radius:999px;padding:3px 10px}
+.flowmini{display:flex;flex-wrap:wrap;align-items:center;gap:6px;justify-content:center;background:#fff;border-radius:999px;padding:8px 14px}
+.dot{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;color:#fff;font-size:.7rem}.d1{background:#bfe0ff;border:2px solid var(--comp)}.d2{background:#ffd54a}.d3{background:#ff8f1f}.d4{background:var(--ok)}
+.chk{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;margin:8px 0 4px}
+.chkrow{display:flex;align-items:flex-start;gap:10px;text-align:left;padding:10px 12px;border-radius:14px;background:#fff;border:2px solid var(--line);font-weight:700;min-height:52px}
+.chkrow .box{flex:none;width:28px;height:28px;border-radius:8px;border:3px solid #9aa3b2;display:grid;place-items:center;color:#fff;font-weight:800}
+.chkrow.on{background:#eef0f4;color:#7a8496}.chkrow.on .box{background:var(--ok);border-color:var(--ok)}
+.chkrow.on.rep span:last-child{text-decoration:line-through}
+.btn.danger{background:#fff;border:3px solid var(--bad);color:var(--bad)}
 .adultlink{display:block;margin:26px auto 8px;background:none;border:0;color:var(--muted);font-weight:700;font-size:.9rem;text-decoration:underline;min-height:44px}
 .adultbtn{display:block;width:100%;margin:18px 0 0;min-height:56px;border-radius:18px;background:#fff;border:3px dashed #b9c6e4;font-weight:800;font-size:1rem;color:var(--muted)}
 .rep{border-collapse:collapse;width:100%;min-width:520px}.rep th,.rep td{border:1px solid var(--line);padding:8px;text-align:center}.rep td:first-child{text-align:left}
@@ -329,16 +357,18 @@ body.big #tutor .bullets{font-size:1.75rem}body.big #tutor .tq{font-size:1.5rem}
 <section id="home">
   <div class="hero hero-s">
     <img src="img/logo-adri-games.webp" alt="Adri Games" class="logo">
-    <p>4.º de Primaria · Matemáticas</p>
+    <p class="hpill">4.º de Primaria · Matemáticas</p>
+    <div class="grow"></div>
+    <span class="starcount" id="starCount">⭐ 0</span>
   </div>
-  <p class="hello">¿Qué hacemos hoy?</p>
+  <div class="board"><span class="bi">💡</span><span>¿Qué hacemos hoy?</span><span class="bi">📐</span></div>
   <div class="htabs" id="htabs">
-    <button data-tab="temas"><span>📚</span><b>Temas</b><small>Aprender y practicar</small></button>
-    <button data-tab="mis"><span>🗺️</span><b>Problemas</b><small>Misiones de la vida real</small></button>
+    <button data-tab="temas" class="tb-t"><span>📚</span><div><b>Temas</b><small>Aprender y practicar</small></div></button>
+    <button data-tab="mis" class="tb-p"><span>📋</span><div><b>Problemas</b><small>Misiones de la vida real</small></div></button>
   </div>
   <div id="tabTemas"><div class="temasg" id="temasg"></div></div>
   <div id="tabMis" hidden><div class="fichasel" id="fichasel"></div>
-    <p class="flowmini">Cada misión: <b class="c1">COMPRENDO</b> → <b class="c2">PIENSO</b> → <b class="c3">RESUELVO</b> → <b class="c4">COMPRUEBO</b></p></div>
+    <p class="flowmini">Cada misión: <span class="dot d1"></span>COMPRENDO <span class="dot d2"></span>PIENSO <span class="dot d3"></span>RESUELVO <span class="dot d4">✓</span>COMPRUEBO</p></div>
   <button class="adultlink" id="adultBtn">👩‍👦 Zona de mamá/papá</button>
 </section>
 
@@ -539,7 +569,7 @@ const ansTxt=(q,a)=>a===undefined||a===''||(Array.isArray(a)&&!a.length)?null:(q
 const solTxt=q=>q.tipo==='num'?fmt(q.respuesta)+(q.unidad?' '+q.unidad:''):Array.isArray(q.respuesta)?q.respuesta.join('; '):q.respuesta;
 
 /* ---------- builders ---------- */
-const CICO={acuario:'🐠',cine:'🍿',sumas:'♻️',ceros:'🌳',combinadas:'🎂',estadistica:'📊',geometria:'🗺️',numeracion:'🃏',graficos:'🏆'};
+const CICO={acuario:'🐠',cine:'🍿',sumas:'♻️',ceros:'🪴',combinadas:'🎂',estadistica:'📋',geometria:'🗺️',numeracion:'🏪',graficos:'⚽'};
 const cartelHTML=c=>`<div class="cartel"><div class="ct"><span class="cico" aria-hidden="true">${CICO[ficha().id]||'📋'}</span>${esc(c.titulo)}</div><table>${c.filas.map(r=>`<tr><td>${esc(r[0])}</td><td class="num">${esc(r[1])}</td></tr>`).join('')}</table></div>`;
 const barHTML=b=>`<div class="bar num"><div class="tot"><span>${esc(b.total)}</span></div><div class="cells">${Array(b.partes).fill(`<div>${esc(b.valor)}</div>`).join('')}</div></div>`;
 function stepperHTML(){const d=st().done;return phases().map((ph,i)=>`<span class="st ${ph.id} ${i===cur.p?'cur':''} ${d[ph.id]?'done':''}">${d[ph.id]?'✓ ':''}${ph.nombre}</span>`).join('')}
@@ -554,8 +584,14 @@ const applyKey=(v,k)=>k==='del'?v.slice(0,-1):k==='clr'?'':(v.length<7?(v+k).rep
 const CHANGED=['acuario','cine','sumas','combinadas','estadistica','geometria'];
 /* ---------- Temas ---------- */
 const FIDX=id=>DATA.fichas.findIndex(f=>f.id===id),EIDX=id=>DATA.explicaciones.findIndex(e=>e.id===id);
-function renderTemas(){$('temasg').innerHTML=(DATA.temas||[]).map((tm,i)=>{const n=tm.explicaciones.length,dn=tm.explicaciones.filter(id=>store.expDone[id]).length;
-  return `<button class="tcard" data-tm="${i}"><span class="ti">${tm.icono}</span><b>${esc(tm.titulo)}</b><span>${dn?`✓ ${dn} de ${n} aprendidas`:`${n} explicaciones`}</span></button>`}).join('')}
+/* hecho / sin hacer (el adulto puede cambiarlo en su zona) */
+function partsF(f){const s=store.byFicha[f.id];return s?f.fases.filter(p=>s.done[p.id]).length:0}
+function doneF(f){const m=(store.marks||{})[f.id];if(m!==undefined)return m;return partsF(f)===f.fases.length}
+function doneT(tm){const m=(store.marks||{})['tema:'+tm.id];if(m!==undefined)return m;
+  const ex=tm.explicaciones.every(id=>store.expDone[id]),k=tm.practica?FIDX(tm.practica):-1;return ex&&(k<0||doneF(DATA.fichas[k]))}
+const STARS=(d,n)=>'★'.repeat(d)+'<i>'+'☆'.repeat(Math.max(0,n-d))+'</i>';
+function renderTemas(){$('temasg').innerHTML=(DATA.temas||[]).map((tm,i)=>{const n=tm.explicaciones.length,dn=tm.explicaciones.filter(id=>store.expDone[id]).length,ok=doneT(tm);
+  return `<button class="tcard ${ok?'isdone':''}" data-tm="${i}"><span class="art">${tm.icono}</span><span class="mb"><b>${esc(tm.titulo)}</b><span class="stars">${STARS(Math.min(dn,5),Math.min(n,5))}</span><span>${dn} de ${n} explicaciones</span></span>${ok?'<span class="dbadge">✓ Hecho</span>':''}</button>`}).join('')}
 const NPR=fi=>DATA.fichas[fi].fases.reduce((s,p)=>s+p.preguntas.length,0);
 $('temasg').onclick=e=>{const b=e.target.closest('[data-tm]');if(b){store.tema=+b.dataset.tm;save();renderTema()}};
 let curTema=0;
@@ -600,7 +636,10 @@ function renderHome(){
   try{renderTemas()}catch(e){}
   const tab=store.homeTab||'temas';$('tabTemas').hidden=tab!=='temas';$('tabMis').hidden=tab!=='mis';
   document.querySelectorAll('#htabs [data-tab]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.tab===tab));
-  $('fichasel').innerHTML=DATA.fichas.length>1?DATA.fichas.map((x,i)=>{if(x.practica)return '';const nq=x.fases.reduce((s,p)=>s+p.preguntas.length,0),st2=store.byFicha[x.id],dn=st2?x.fases.filter(p=>st2.done[p.id]).length:0;return `<button data-fi="${i}" aria-pressed="${i===store.fi}"><span class="mn">MISIÓN ${i+1}</span><span class="mt">${esc(x.titulo)}</span><span class="mm">${nq} retos · ${dn===x.fases.length?'<b>✓ completada</b>':dn+' de '+x.fases.length+' partes'}</span></button>`}).join(''):'';
+  $('fichasel').innerHTML=DATA.fichas.map((x,i)=>{if(x.practica)return '';const dn=partsF(x),nf=x.fases.length,ok=doneF(x);
+    return `<button data-fi="${i}" class="${ok?'isdone':''}" aria-pressed="${i===store.fi&&!ok}"><span class="art">${CICO[x.id]||'📋'}</span><span class="mb"><span class="mn">MISIÓN ${i+1}</span><span class="mt">${esc(x.titulo)}</span><span class="mm"><span class="stars">${STARS(dn,nf)}</span> ${dn} de ${nf} partes</span></span>${ok?'<span class="dbadge">✓ Hecha</span>':''}</button>`}).join('');
+  const all=DATA.fichas.reduce((s,f)=>s+f.fases.length,0),got=DATA.fichas.reduce((s,f)=>s+partsF(f),0)+Object.keys(store.expDone||{}).length;
+  $('starCount').textContent=`⭐ ${got} / ${all+DATA.explicaciones.length}`;
   show('home');
 }
 $('htabs').onclick=e=>{const b=e.target.closest('[data-tab]');if(b){store.homeTab=b.dataset.tab;save();renderHome()}};
@@ -843,7 +882,17 @@ const TIPOERR={practica:'práctica del tema (concepto y cálculo)',comprendo:'co
 function lastByPhase(){const L={};(store.log||[]).forEach(r=>{L[r.ficha+'|'+r.fase]=r});return L}
 function renderInforme(){
   const L=lastByPhase(),log=store.log||[];let h='',weak=[];
-  if(!log.length){$('repBody').innerHTML='<div class="card">Todavía no hay partes entregadas. Cuando Adri juegue una misión, aquí verás cómo le ha ido.</div>';show('informe');return}
+  const row=(key,label,on)=>`<button class="chkrow ${on?'on':''}" data-mark="${esc(key)}"><span class="box">${on?'✓':''}</span><span>${label}</span></button>`;
+  h+=`<div class="card"><h3 style="margin:0 0 4px">✅ Lista de control</h3><p style="color:var(--muted);margin:0">Se marca sola cuando Adri termina. <b>Tócala para cambiarla</b>: desmarca lo que quieras que repase y saldrá otra vez en color en su pantalla.</p>
+    <h4 style="margin:12px 0 0">Temas</h4><div class="chk">${(DATA.temas||[]).map(tm=>row('tema:'+tm.id,tm.icono+' '+esc(tm.titulo),doneT(tm))).join('')}</div>
+    <h4 style="margin:12px 0 0">Misiones de problemas</h4><div class="chk">${DATA.fichas.filter(f=>!f.practica).map(f=>row(f.id,(CICO[f.id]||'📋')+' '+esc(f.titulo),doneF(f))).join('')}</div></div>`;
+  const rp=[],R=store.rep||{};Object.values(L).forEach(r=>{const f=DATA.fichas.find(x=>x.id===r.ficha);if(!f)return;const qs=f.fases.flatMap(p=>p.preguntas);
+    (r.fallos||[]).forEach(id=>{const q=qs.find(z=>z.id===id);if(q)rp.push({key:f.id+':'+id,f,q,fase:r.fase})})});
+  h+=`<div class="card" style="margin-top:12px"><h3 style="margin:0 0 4px">📝 Para repasar</h3><p style="color:var(--muted);margin:0">Ejercicios que falló en su último intento. Marca ✓ cuando los hayáis repasado juntos (puedes desmarcarlos).</p>
+    ${rp.length?`<div class="chk">${rp.map(x=>`<button class="chkrow rep ${R[x.key]?'on':''}" data-rep="${esc(x.key)}"><span class="box">${R[x.key]?'✓':''}</span><span><b>${esc(x.f.titulo)} · ${FASE[x.fase]||''}</b><br>${md(x.q.enunciado)}</span></button>`).join('')}</div>
+    <p style="margin:8px 0 0;color:var(--muted)">Repasados: <b>${rp.filter(x=>R[x.key]).length} de ${rp.length}</b></p>`:'<p style="margin:10px 0 0">🎉 No hay ejercicios fallados pendientes.</p>'}</div>`;
+  h+=`<div class="card" style="margin-top:12px"><h3 style="margin:0 0 4px">⟲ Empezar de cero</h3><p style="color:var(--muted);margin:0 0 10px">Borra en este iPad todo el progreso, las marcas, los dibujos del borrador y el historial, para volver a hacer todo el repaso.</p><button class="btn danger" id="resetAll">⟲ Reiniciar todo el repaso</button></div>`;
+  if(!log.length){$('repBody').innerHTML=h+'<div class="card" style="margin-top:12px">Todavía no hay partes entregadas. Cuando Adri juegue, aquí verás cómo le ha ido.</div>';show('informe');return}
   h+='<div class="card" style="overflow-x:auto"><table class="rep"><tr><th>Misión</th>'+Object.values(FASE).map(f=>`<th>${f}</th>`).join('')+'</tr>';
   DATA.fichas.forEach((f,fi)=>{if(!f.fases.some(ph=>L[f.id+'|'+ph.id]))return;
     h+=`<tr><td><b>${esc(f.titulo)}</b></td>`+Object.keys(FASE).map(k=>{const r=L[f.id+'|'+k];if(!r)return '<td class="na">—</td>';const pc=Math.round(100*r.ok/r.total);
@@ -858,6 +907,15 @@ function renderInforme(){
   $('repBody').innerHTML=h;show('informe');
 }
 $('repBody').onclick=e=>{const c=e.target.closest('[data-e]');if(c){T={e:+c.dataset.e,s:0,ok:false,v:''};renderTutor();show('tutor');return}
+  const mk=e.target.closest('[data-mark]');if(mk){const k=mk.dataset.mark;store.marks=store.marks||{};
+    const tm=k.startsWith('tema:')?DATA.temas.find(t=>'tema:'+t.id===k):null,f0=tm?null:DATA.fichas.find(f=>f.id===k);
+    const clearF=id=>{delete store.byFicha[id];delete store.marks[id];Object.keys(pads).forEach(p=>{if(p.startsWith(id+':'))delete pads[p]})};
+    if(tm?doneT(tm):doneF(f0)){ /* desmarcar = volver a hacerlo */
+      delete store.marks[k];if(tm){tm.explicaciones.forEach(id=>delete store.expDone[id]);if(tm.practica)clearF(tm.practica)}else clearF(k)}
+    else store.marks[k]=true;save();const y=window.scrollY;renderInforme();window.scrollTo(0,y);return}
+  const rpb=e.target.closest('[data-rep]');if(rpb){store.rep=store.rep||{};const k=rpb.dataset.rep;if(store.rep[k])delete store.rep[k];else store.rep[k]=true;save();const y=window.scrollY;renderInforme();window.scrollTo(0,y);return}
+  const ra=e.target.closest('#resetAll');if(ra){if(!ra.dataset.armed){ra.dataset.armed='1';ra.textContent='¿Seguro? Se borra todo. Toca otra vez para confirmar';return}
+    store={fi:0,byFicha:{},expDone:{},log:[],marks:{},rep:{},homeTab:store.homeTab};Object.keys(pads).forEach(k=>delete pads[k]);save();renderInforme();return}
   const r=e.target.closest('[data-redo]');if(!r)return;const [fi,k]=r.dataset.redo.split('|');store.fi=+fi;const s=st(),ph=phases().find(p=>p.id===k);
   ph.preguntas.forEach(q=>{delete s.ans[q.id];if(s.hints)delete s.hints[q.id];if(s.read)delete s.read[q.id]});delete s.done[k];save();
   cur={p:phases().indexOf(ph),q:0,fromReview:false,showCartel:false};show('quest');renderQ()};
