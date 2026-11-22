@@ -43,6 +43,19 @@ Sumas y restas hasta 4 cifras · operaciones combinadas · multiplicar por 1 y 2
 | 8 | La tienda de los coleccionistas | 18 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_numeracion.pdf) |
 | 9 | La liga del recreo | 18 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_graficos.pdf) |
 
+**Repaso por temas** (explicaciones + 12 ejercicios + ficha A4)
+
+| Tema | Explicaciones | Ficha A4 |
+|---|---|---|
+| 🔢 Números hasta 9 999 | 3 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_practica_numeracion.pdf) |
+| ➕ Sumas y restas | 6 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_practica_sumasrestas.pdf) |
+| ✖️ Multiplicar | 6 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_practica_multiplicacion.pdf) |
+| 🧮 Operaciones combinadas | 3 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_practica_combinadas.pdf) |
+| 📐 Rectas, figuras y simetría | 5 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_practica_geometria.pdf) |
+| 📊 Datos y gráficos | 3 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_practica_estadistica.pdf) |
+| 🧩 Series | 1 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_practica_series.pdf) |
+| 🧠 Problemas | 5 | misiones |
+
 - [Explicaciones (PDF)](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/explicaciones.pdf) · [Solucionario (PDF)](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/soluciones.pdf)
 
 **Explicaciones paso a paso**
@@ -66,6 +79,19 @@ Sumas y restas hasta 4 cifras · operaciones combinadas · multiplicar por 1 y 2
 - Comparar números: < y > (SA2)
 - Leer y hacer un gráfico de barras (SA2)
 - Aproximar a la centena y a la UM (SA2)
+- Valor posicional y descomposición (SA2)
+- Sumar en columna con llevadas (SA2)
+- Restar en columna con llevadas (SA2)
+- El término que falta (SA2)
+- Sumas y restas seguidas (SA2)
+- Problemas de dos pasos (SA2 / SA3)
+- Trazar paralelas y perpendiculares (SA2)
+- Completar una figura simétrica (SA2)
+- Factores y producto (SA3)
+- Multiplicar por una cifra con llevadas (SA3)
+- Doble, triple y el doble del doble (SA3)
+- Estimar el producto: ¿cuántas cifras tendrá? (SA3)
+- Inventar un problema (SA3)
 
 ### Lengua · _próximamente_
 
@@ -84,6 +110,8 @@ Sumas y restas hasta 4 cifras · operaciones combinadas · multiplicar por 1 y 2
 | 22/11/2026 | Según el correo de la profesora: ficha «Tarde de cine», hábito de leer la pregunta en voz alta y preguntas sin cálculo. |
 | 22/11/2026 | Primer bloque del plan: sumas y restas, los ceros, operaciones combinadas, estadística y geometría. |
 | 22/11/2026 | Portada por curso y asignatura con insignias; ruta de estudio 1 Aprendo · 2 Practico · 3 Demuestro · 4 Me corrijo. |
+| 22/11/2026 | Misiones 8 y 9 (numeración, series, gráficos, simetría) y revisión pedagógica externa con correcciones. |
+| 22/11/2026 | Repaso por temas: 8 temas, 32 explicaciones, ejercicios y ficha A4 por tema; subrayador táctil; progreso y plan de refuerzo para la familia. |
 
 ## Licencia
 
