@@ -81,7 +81,7 @@ Sumas y restas hasta 4 cifras · operaciones combinadas · multiplicar por 1 y 2
 - Aproximar a la centena y a la UM (SA2)
 - Valor posicional y descomposición (SA2)
 - Sumar en columna con llevadas (SA2)
-- Restar en columna con llevadas (SA2)
+- Restar en columna: cuando no llega (SA2)
 - El término que falta (SA2)
 - Sumas y restas seguidas (SA2)
 - Problemas de dos pasos (SA2 / SA3)
