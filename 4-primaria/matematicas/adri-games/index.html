@@ -291,6 +291,16 @@ h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance}
 .vid b{display:block}.vid span{font-size:.8rem;color:var(--muted)}
 body.big #tutor .bullets{font-size:1.75rem}body.big #tutor .tq{font-size:1.5rem}body.big #tutor .choice{font-size:1.5rem}
 @media (max-width:600px){.mascot svg{width:56px;height:62px}}
+/* Móvil: que todo quepa a lo ancho */
+@media (max-width:600px){
+  .htabs{gap:8px}.htabs button{min-width:0;padding:12px 6px;gap:6px!important}.htabs button div{min-width:0}
+  .htabs button span{font-size:1.7rem}.htabs button b{font-size:1.1rem}.htabs button small{font-size:.72rem;line-height:1.2}
+  .guide{flex-direction:column;gap:8px}.mascot{flex-direction:row;gap:8px}
+  .mascot svg{width:42px;height:47px}.mascot img.maestra{width:54px}
+  .bubble{padding:12px 14px}.bullets{font-size:1.15rem}
+  .homefab{min-height:44px;padding:0 14px;font-size:1rem}
+  body{padding-bottom:72px!important}
+}
 .ctx{background:#eef5ff;border:2px solid #cfe0ff;border-radius:16px;padding:10px 14px;margin:10px 0 6px;font-size:1.1rem}
 .pauta{background:#fffbe8;border:3px solid #f5c84a;border-radius:18px;padding:12px 16px}
 .pauta h4{font-family:var(--display);font-size:1.15rem;margin:0 0 6px}
