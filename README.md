@@ -1,60 +1,83 @@
-# Adri Games · Juegos de repaso de Matemáticas
+# Adri Games · Juegos y fichas de repaso
 
-Juegos gratuitos para repasar las Matemáticas de **4.º de Primaria**, situaciones de aprendizaje **SA2 y SA3**. Están pensados para jugar en tablet (iPad, también el de 12,9") y se pueden imprimir en A4.
+Juegos para tablet (iPad) y fichas A4 para imprimir, organizados por **curso** y **asignatura**. Uso libre y gratuito.
 
-**👉 Jugar ahora: https://topochito.github.io/adri-games/**
+**👉 Entrar: https://topochito.github.io/adri-games/**
 
-Se pueden usar y compartir libremente con familias, alumnos y docentes.
+## Índice
 
----
+- [4.º de Primaria](#4-primaria)
 
-## 4.º de Primaria · Matemáticas (SA2 y SA3)
+## Cómo estudiar (ruta de cada día)
 
-### Adri Games · Fichas y explicaciones
-https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/
+| Paso | Qué hace | Dónde |
+|---|---|---|
+| 1. Aprendo | Explicación paso a paso (5–10 min) | Juego → Aprendo |
+| 2. Practico | Ejercicios con pistas y corrección al momento | Juego → Practico |
+| 3. Demuestro | La ficha A4 en papel, sin ayuda, como en el examen | Imprimir A4 |
+| 4. Me corrijo | Soluciones con el procedimiento | Juego → Me corrijo |
 
-Sigue el método **COMPRENDO → PIENSO → RESUELVO → COMPRUEBO**. Tiene cuatro botones:
+<a id="4-primaria"></a>
+## 4.º de Primaria
 
-| Botón | Qué hace |
+### Matemáticas · SA2 y SA3
+
+Sumas y restas hasta 4 cifras · operaciones combinadas · multiplicar por 1 y 2 cifras · datos en textos e imágenes · problemas con barras · rectas y simetría · frecuencias y moda
+
+**Juegos**
+
+- [Adri Games](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/): 1 Aprendo · 2 Practico · 3 Demuestro en papel · 4 Me corrijo
+- [Expedición Mates](https://topochito.github.io/adri-games/4-primaria/matematicas/expedicion-mates/): Rondas rápidas de 10 retos por tema
+
+**Fichas para imprimir (A4)**
+
+| # | Ficha | Ejercicios | PDF |
+|---|---|---|---|
+| 1 | Excursión al acuario | 14 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_acuario.pdf) |
+| 2 | Tarde de cine | 15 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_cine.pdf) |
+| 3 | La gran recogida de tapones | 17 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_sumas.pdf) |
+| 4 | Visita al vivero | 17 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_ceros.pdf) |
+| 5 | La compra del cumpleaños | 17 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_combinadas.pdf) |
+| 6 | Detectives de datos: la encuesta | 16 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_estadistica.pdf) |
+| 7 | El plano del barrio | 16 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_geometria.pdf) |
+
+- [Explicaciones (PDF)](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/explicaciones.pdf) · [Solucionario (PDF)](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/soluciones.pdf)
+
+**Explicaciones paso a paso**
+
+- Cómo leer un problema (SA2 / SA3)
+- Buscar datos en textos e imágenes (SA3)
+- Multiplicar por dos cifras (SA3)
+- Operaciones con paréntesis (SA2)
+- Problemas con barras (SA3)
+- Restar decenas de cabeza (SA2)
+- Multiplicar por 10, 100 y 1000 (los ceros) (SA3)
+- Términos de la suma y de la resta (SA2)
+- La prueba de la resta (SA2)
+- Primero multiplico, después sumo (SA2)
+- Tabla de frecuencias y moda (SA2)
+- Datos cualitativos y cuantitativos (SA2)
+- Punto, recta, semirrecta y segmento (SA2)
+- Paralelas, secantes y perpendiculares (SA2)
+- Figuras simétricas y eje de simetría (SA2)
+
+### Lengua · _próximamente_
+
+### Inglés · _próximamente_
+
+### Ciencias Naturales · _próximamente_
+
+### Ciencias Sociales · _próximamente_
+
+## Registro de trabajos realizados
+
+| Fecha | Trabajo |
 |---|---|
-| **JUGAR** | Una situación real (con un cartel que tiene datos) y ejercicios por fases. Hay pistas, un borrador para escribir con el **Apple Pencil** o con el dedo, y se **revisan las respuestas antes de entregar**. Al entregar se ve cómo se resuelve cada ejercicio. |
-| **IMPRIMIR A4** | La ficha del alumno, las explicaciones y el solucionario en **PDF A4**. Los ejercicios son los mismos que en el juego. |
-| **VER EXPLICACIÓN** | Explicaciones en **bloques cortos de 5 a 10 minutos**. Cada paso tiene un concepto, un ejemplo resuelto, el error frecuente, un ejercicio guiado y otro autónomo, y una pregunta rápida. No se avanza hasta acertar. |
-| **SOLUCIONES** | Zona para el adulto: hay que mantener pulsado 2 segundos. Incluye el procedimiento de cada ejercicio. |
-
-### Expedición Mates
-https://topochito.github.io/adri-games/4-primaria/matematicas/expedicion-mates/
-
-Rondas rápidas de 10 retos por tema, con números nuevos en cada partida, pistas, rachas y estrellas. Temas:
-- el número que falta
-- operaciones combinadas
-- UM, C, D y U
-- multiplicar
-- rectas y simetría
-- gráficos y moda
-- problemas
-
----
-
-## Cómo usarlo en el iPad
-
-1. Abre el enlace en **Safari**.
-2. Pulsa **Compartir → Añadir a pantalla de inicio**. Se abre a pantalla completa, como una app.
-3. Funciona en horizontal y en vertical.
-4. El progreso se guarda en ese iPad.
-
-**Imprimir:** en Adri Games, pulsa **IMPRIMIR A4**. Abre un PDF o usa el botón **Imprimir**, y elige la impresora o **Guardar como PDF**.
-
-## Contenidos (SA2 y SA3)
-
-- Sumas y restas de hasta 4 cifras, la prueba de la resta y el término que falta.
-- Operaciones combinadas y jerarquía (primero los paréntesis).
-- Relaciones de igualdad y desigualdad (=, ≠).
-- Unidades de orden (UM, C, D, U) y aproximación.
-- Multiplicar por 1 y por 2 cifras números de hasta 4 cifras; factores y producto.
-- Buscar datos en textos e imágenes; problemas con barras.
-- Punto, recta, semirrecta y segmento; rectas paralelas, secantes y perpendiculares; simetría.
-- Tablas de frecuencias, gráficos, frecuencia absoluta y moda.
+| 22/11/2026 | Nace Adri Games: juego Expedición Mates y Adri Games con el método Comprendo → Pienso → Resuelvo → Compruebo. |
+| 22/11/2026 | Fichas A4 con diseño de ficha escolar (letra redonda, dibujos en línea), explicaciones paso a paso y solucionario. |
+| 22/11/2026 | Según el correo de la profesora: ficha «Tarde de cine», hábito de leer la pregunta en voz alta y preguntas sin cálculo. |
+| 22/11/2026 | Primer bloque del plan: sumas y restas, los ceros, operaciones combinadas, estadística y geometría. |
+| 22/11/2026 | Portada por curso y asignatura con insignias; ruta de estudio 1 Aprendo · 2 Practico · 3 Demuestro · 4 Me corrijo. |
 
 ## Licencia
 

@@ -13,29 +13,45 @@
 <body>
 <title>Adri Games</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@600;700;800&display=swap">
 <style>
-:root{--bg:#edf1f7;--paper:#fff;--ink:#1c2333;--muted:#5b6579;--line:#d3dae8;--a:#2c74d8;--b:#0c3446;--sand:#f5c85c;--o:#e2700e}
-body{background:var(--bg);color:var(--ink);font-family:'Nunito',system-ui,sans-serif}
-.w{max-width:960px;margin:0 auto;padding:24px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
-h1{font-family:'Baloo 2',system-ui,sans-serif;font-size:clamp(2.4rem,7vw,3.6rem);line-height:1;margin:0}
-h1 span{color:var(--o)}
-.lede{color:var(--muted);font-weight:600;margin:.4rem 0 0}
-.curso{margin-top:26px}
-.curso>h2{font-family:'Baloo 2',system-ui,sans-serif;font-size:1.9rem;margin:0 0 10px;display:flex;align-items:center;gap:10px}
-.curso>h2 em{font-style:normal;font-size:.8rem;font-family:'Nunito',sans-serif;font-weight:800;background:var(--ink);color:#fff;padding:3px 10px;border-radius:999px}
-.asig{background:var(--paper);border:2px solid var(--line);border-radius:24px;padding:18px;margin-bottom:14px}
-.asig h3{font-family:'Baloo 2',system-ui,sans-serif;font-size:1.5rem;margin:0}
+/* Portada gamer: fondo azul como el banner, tarjetas blancas para leer bien */
+:root{--deep:#0a2a6b;--blue:#1565c0;--sky:#42a5f5;--paper:#fff;--ink:#1c2333;--muted:#5b6579;--line:#d3dae8;--gold:#ffc83d;--o:#ff8f1f;color-scheme:light}
+html{font-size:18px}
+body{color:var(--ink);font-family:'Nunito',system-ui,sans-serif;background:var(--deep);
+  background-image:radial-gradient(900px 500px at 15% -10%,#2f7fe0 0,transparent 60%),radial-gradient(900px 600px at 100% 0,#1e5bc6 0,transparent 55%),linear-gradient(180deg,#0d3a8f,#0a2a6b 60%,#081f52);min-height:100vh}
+.w{max-width:1100px;margin:0 auto;padding:22px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+.top{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.top img.logo{width:min(560px,100%);height:auto;border-radius:22px;box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.lede{color:#dbe8ff;font-weight:700;margin:.2rem 0 0;font-size:1rem}
+.curso{margin-top:28px}
+.curso>h2{font-family:'Baloo 2',system-ui,sans-serif;font-size:2rem;margin:0 0 14px;color:#fff;display:flex;align-items:center;gap:10px}
+.curso>h2 em{font-style:normal;font-size:.8rem;font-family:'Nunito',sans-serif;font-weight:800;background:var(--gold);color:var(--ink);padding:4px 12px;border-radius:999px}
+.subjects{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+a.subj,div.subj{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 14px 16px;border-radius:24px;text-decoration:none;color:#fff;
+  background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.18);transition:transform .12s}
+a.subj:active{transform:scale(.97)}
+.subj img{width:100%;height:auto;max-height:150px;object-fit:contain;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+.subj b{font-family:'Baloo 2',system-ui,sans-serif;font-size:1.25rem;line-height:1.1}
+.subj span{font-size:.85rem;font-weight:800;color:var(--gold)}
+a.subj{border-color:var(--gold);box-shadow:0 0 0 4px rgba(255,200,61,.25)}
+div.subj.off img{filter:grayscale(.85) brightness(.85)}
+div.subj.off{opacity:.75}
+.ribbon{position:absolute;top:10px;right:10px;background:#fff;color:var(--ink);font-weight:800;font-size:.7rem;padding:3px 9px;border-radius:999px}
+.asig{background:var(--paper);border-radius:24px;padding:18px;margin-bottom:14px;box-shadow:0 10px 26px rgba(0,0,0,.25)}
+.asig .hd{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.asig .hd img{height:90px;width:auto;max-width:100%}
+.asig h3{font-family:'Baloo 2',system-ui,sans-serif;font-size:1.6rem;margin:0}
 .asig h3 small{font-family:'Nunito',sans-serif;font-size:1rem;color:var(--o);font-weight:800;margin-left:6px}
-.asig .det{color:var(--muted);font-size:15px;margin:.3rem 0 12px}
-.asig.off{opacity:.6}
-.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
-a.c{display:flex;flex-direction:column;gap:6px;min-height:150px;justify-content:flex-end;padding:20px;border-radius:22px;color:#fff;text-decoration:none;box-shadow:0 6px 0 rgba(28,35,51,.18)}
+.asig .det{color:var(--muted);font-size:.85rem;margin:.3rem 0 12px}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+a.c{display:flex;flex-direction:column;gap:6px;min-height:140px;justify-content:flex-end;padding:20px;border-radius:22px;color:#fff;text-decoration:none;box-shadow:0 6px 0 rgba(28,35,51,.25)}
 a.c b{font-family:'Baloo 2',system-ui,sans-serif;font-size:1.8rem;line-height:1}
-a.c span{font-weight:700;opacity:.92;font-size:15px}
-.c1{background:var(--a)}.c2{background:var(--b)}.c2 b{color:var(--sand)}
-.pdfs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
-.pdfs strong{font-size:14px;color:var(--muted);margin-right:4px}
-.pdfs a{font-weight:800;font-size:15px;color:var(--ink);text-decoration:none;border:2px solid var(--line);border-radius:999px;padding:7px 14px;background:var(--bg)}
-.crumb{font-weight:800;color:var(--muted);text-decoration:none;display:inline-block;margin-bottom:10px}
-</style><div class="w"><h1>Adri<span> </span>Games</h1><p class="lede">Juegos y fichas de repaso por curso y asignatura. En el iPad: Safari → Compartir → Añadir a pantalla de inicio.</p><section class="curso"><h2>4.º de Primaria<em>Ahora</em></h2><div class="asig"><h3>Matemáticas<small>SA2 y SA3</small></h3><p class="det">Sumas y restas hasta 4 cifras · operaciones combinadas · multiplicar por 1 y 2 cifras · datos en textos e imágenes · problemas con barras · rectas y simetría · frecuencias y moda</p><div class="g"><a class="c c1" href="4-primaria/matematicas/adri-games/"><b>Adri Games</b><span>Comprendo → Pienso → Resuelvo → Compruebo · explicaciones paso a paso · fichas A4</span></a><a class="c c2" href="4-primaria/matematicas/expedicion-mates/"><b>Expedición Mates</b><span>Rondas rápidas de 10 retos por tema</span></a></div><div class="pdfs"><strong>Imprimir A4:</strong><a href="4-primaria/matematicas/adri-games/imprimir/ficha_acuario.pdf" target="_blank" rel="noopener">Ficha: Excursión al acuario</a><a href="4-primaria/matematicas/adri-games/imprimir/ficha_cine.pdf" target="_blank" rel="noopener">Ficha: Tarde de cine</a><a href="4-primaria/matematicas/adri-games/imprimir/explicaciones.pdf" target="_blank" rel="noopener">Explicaciones</a><a href="4-primaria/matematicas/adri-games/imprimir/soluciones.pdf" target="_blank" rel="noopener">Solucionario</a></div></div><div class="asig off"><h3>Lengua<small>Próximamente</small></h3></div></section></div>
+a.c span{font-weight:700;opacity:.95;font-size:.85rem}
+.c1{background:linear-gradient(135deg,#1e88e5,#1565c0)}.c2{background:linear-gradient(135deg,#0c3446,#13506a)}.c2 b{color:var(--gold)}
+.pdfs{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
+.pdfs strong{font-size:.8rem;color:var(--muted);margin-right:4px}
+.pdfs a{font-weight:800;font-size:.85rem;color:var(--ink);text-decoration:none;border:2px solid var(--line);border-radius:999px;padding:7px 14px;background:#f3f6fb}
+.crumb{font-weight:800;color:#dbe8ff;text-decoration:none;display:inline-block;margin-bottom:12px}
+h1.pg{font-family:'Baloo 2',system-ui,sans-serif;color:#fff;font-size:clamp(2rem,6vw,3rem);margin:0 0 6px}
+</style><div class="w"><div class="top"><img class="logo" src="/adri-games/img/logo-adri-games.webp" alt="Adri Games · Juega · Aprende · Diviértete"><p class="lede">Elige tu curso y tu asignatura. En el iPad: Safari → Compartir → Añadir a pantalla de inicio.</p></div><section class="curso"><h2>4.º de Primaria<em>Ahora</em></h2><div class="subjects"><a class="subj" href="4-primaria/matematicas/"><img src="/adri-games/img/matematicas.webp" alt="Matemáticas" loading="lazy"><b>Matemáticas</b><span>SA2 y SA3 · ¡Entrar!</span></a><div class="subj off"><span class="ribbon">Próximamente</span><img src="/adri-games/img/lengua.webp" alt="Lengua" loading="lazy"><b>Lengua</b></div><div class="subj off"><span class="ribbon">Próximamente</span><img src="/adri-games/img/ingles.webp" alt="Inglés" loading="lazy"><b>Inglés</b></div><div class="subj off"><span class="ribbon">Próximamente</span><img src="/adri-games/img/naturales.webp" alt="Ciencias Naturales" loading="lazy"><b>Ciencias Naturales</b></div><div class="subj off"><span class="ribbon">Próximamente</span><img src="/adri-games/img/sociales.webp" alt="Ciencias Sociales" loading="lazy"><b>Ciencias Sociales</b></div></div></section></div>
 </body>
 </html>
