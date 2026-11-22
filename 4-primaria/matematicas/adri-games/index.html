@@ -67,6 +67,7 @@ h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance}
 .pb{flex:1;min-width:0}.pb h3{font-size:1.35rem;margin:0}.pb p{margin:.2rem 0 .6rem;color:var(--muted)}
 .pb .btn{display:inline-flex;align-items:center;text-decoration:none}
 .mascot[hidden],[hidden]{display:none!important}
+.mascot img.maestra{width:88px;height:auto;border-radius:16px;background:#fff}
 .hero-s{justify-content:flex-start;padding:12px 18px;margin-bottom:14px}.hero-s .logo{max-height:64px;width:auto}
 .hello{font-family:var(--display);font-weight:800;font-size:1.6rem;margin:4px 0 10px}
 .htabs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
@@ -199,7 +200,7 @@ h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance}
 .nocalc{margin:10px 0 0;font-size:1rem;background:#fdecea;border:2px solid #f3b6b1;color:#7a1f19;border-radius:14px;padding:8px 12px}
 .gate{background:var(--paper);border:3px solid var(--ok);border-radius:18px;padding:14px 16px;font-size:1.1rem}
 .gate p{margin:0 0 4px}.gate ol{margin:0 0 12px;padding-left:1.3em}
-.tutora{display:flex;align-items:flex-end;gap:10px;text-align:left}.tav{flex:none;line-height:0}.tav svg{width:64px;height:70px}
+.tutora{display:flex;align-items:flex-end;gap:10px;text-align:left}.tav{flex:none;line-height:0}.tav img{width:64px;height:auto;border-radius:50%;background:#fff;border:3px solid #8250d0}
 .tbub{position:relative;background:#fff;color:var(--ink,#1c2333);border:3px solid #8250d0;border-radius:18px;padding:10px 14px;font-size:1.05rem;line-height:1.4}
 .tbub::before{content:"";position:absolute;left:-12px;bottom:14px;border:8px solid transparent;border-right-color:#8250d0}
 .hintbox .tbub{border-color:#e0b400}.hintbox .tbub::before{border-right-color:#e0b400}
@@ -505,7 +506,7 @@ body.big #tutor .bullets{font-size:1.75rem}body.big #tutor .tq{font-size:1.5rem}
   <div class="qgrid">
     <div class="card pizarra">
       <div class="guide">
-        <div class="mascot" id="mTeach" aria-hidden="true" hidden><svg viewBox="0 0 100 110" width="88" height="96"><circle cx="50" cy="12" r="8" fill="#6b3f1d" stroke="#1c2333" stroke-width="2"/><path d="M30 46 L32 26 L50 20 L68 26 L70 46 L66 56 L34 56 Z" fill="#6b3f1d" stroke="#1c2333" stroke-width="2"/><path d="M22 106 L78 106 L68 66 L32 66 Z" fill="#8250d0" stroke="#1c2333" stroke-width="3"/><circle cx="50" cy="42" r="18" fill="#ffd9b8" stroke="#1c2333" stroke-width="3"/><path d="M33 34 L42 26 L58 26 L67 34" fill="#6b3f1d"/><circle cx="43" cy="42" r="6" fill="#fff" stroke="#1c2333" stroke-width="2.5"/><circle cx="57" cy="42" r="6" fill="#fff" stroke="#1c2333" stroke-width="2.5"/><line x1="49" y1="42" x2="51" y2="42" stroke="#1c2333" stroke-width="2.5"/><circle cx="43" cy="42" r="2" fill="#1c2333"/><circle cx="57" cy="42" r="2" fill="#1c2333"/><path d="M42 51 Q50 58 58 51" stroke="#d6413a" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="36" cy="50" r="3" fill="#ffb3a7"/><circle cx="64" cy="50" r="3" fill="#ffb3a7"/><path d="M50 80 L18 72 L18 92 L50 100 Z" fill="#fff" stroke="#1c2333" stroke-width="2.5"/><path d="M50 80 L82 72 L82 92 L50 100 Z" fill="#fff" stroke="#1c2333" stroke-width="2.5"/><line x1="24" y1="80" x2="44" y2="85" stroke="#9aa6bd" stroke-width="2"/><line x1="56" y1="85" x2="76" y2="80" stroke="#9aa6bd" stroke-width="2"/></svg><span>La maestra</span></div>
+        <div class="mascot" id="mTeach" aria-hidden="true" hidden><img class="maestra" src="img/maestra.webp" alt="" width="88" height="95"><span>La maestra</span></div>
         <div class="mascot" id="mPixel" aria-hidden="true"><svg viewBox="0 0 90 100" width="84" height="94"><line x1="45" y1="6" x2="45" y2="18" stroke="#1c2333" stroke-width="3"/><circle cx="45" cy="6" r="5" fill="#ffc83d" stroke="#1c2333" stroke-width="2"/><rect x="10" y="16" width="70" height="56" rx="14" fill="#3b82f6" stroke="#1c2333" stroke-width="3"/><rect x="20" y="26" width="50" height="34" rx="9" fill="#0b1d3a"/><rect x="29" y="34" width="10" height="10" rx="3" fill="#5ef2ff"/><rect x="51" y="34" width="10" height="10" rx="3" fill="#5ef2ff"/><path d="M34 51 Q45 58 56 51" stroke="#5ef2ff" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="26" y="74" width="38" height="20" rx="6" fill="#ff8f1f" stroke="#1c2333" stroke-width="3"/><rect x="4" y="34" width="8" height="20" rx="4" fill="#3b82f6" stroke="#1c2333" stroke-width="2"/><rect x="78" y="34" width="8" height="20" rx="4" fill="#3b82f6" stroke="#1c2333" stroke-width="2"/></svg><span>Profe Pixel</span></div>
         <div class="bubble"><span class="ttype" id="tType"></span><ul class="bullets" id="tLines"></ul><button class="btn ghost" id="tMore">➕ Siguiente idea</button></div>
       </div>
@@ -699,7 +700,7 @@ $('choiceAns').onclick=e=>{const b=e.target.closest('.choice');if(!b)return;cons
 $('readBtn').onclick=()=>{const r=st().read||(st().read={});r[curQ().id]=true;save();renderQ()};
 $('cartelBtn').onclick=()=>{cur.showCartel=$('qcartel').hidden;$('qcartel').hidden=!$('qcartel').hidden;$('cartelBtn').textContent=$('qcartel').hidden?'Ver cartel':'Ocultar cartel'};
 /* La maestra tutora: aparece con las pistas, al revisar y al terminar */
-function teach(msg){const s=document.querySelector('#mTeach svg');return `<div class="tutora"><span class="tav">${s?s.outerHTML:'👩‍🏫'}</span><div class="tbub">${msg}</div></div>`}
+function teach(msg){const s=document.querySelector('#mTeach img');return `<div class="tutora"><span class="tav">${s?s.outerHTML:'👩‍🏫'}</span><div class="tbub">${msg}</div></div>`}
 $('hintBtn').onclick=()=>{$('hintbox').innerHTML=teach('<b>Pista de la maestra:</b> '+md(curQ().pista));$('hintbox').hidden=false;const h=st().hints||(st().hints={});h[curQ().id]=(h[curQ().id]||0)+1;save()};
 $('prevBtn').onclick=()=>{if(cur.q>0){cur.q--;renderQ()}};
 $('nextBtn').onclick=()=>{const ph=phases()[cur.p];if(cur.fromReview||cur.q===ph.preguntas.length-1){renderReview()}else{cur.q++;renderQ()}};
