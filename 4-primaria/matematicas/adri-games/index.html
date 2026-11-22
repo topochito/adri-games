@@ -679,6 +679,8 @@ function renderSols(){
   $('solBody').innerHTML=h+'</div>';show('sols');
 }
 
+/* Enlace directo a una misión: .../adri-games/#mision-3 */
+try{const mh=/^#mision-(\d+)$/.exec(location.hash);if(mh){const n=+mh[1]-1;if(n>=0&&n<DATA.fichas.length){store.fi=n;save()}}}catch(e){}
 renderHome();
 })();
 </script>
