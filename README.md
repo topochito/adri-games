@@ -1,17 +1,17 @@
-# AQUILA GAMES · Juegos de repaso de Matemáticas
+# Adri Games · Juegos de repaso de Matemáticas
 
 Juegos gratuitos para repasar las Matemáticas de **4.º de Primaria**, situaciones de aprendizaje **SA2 y SA3**. Están pensados para jugar en tablet (iPad, también el de 12,9") y se pueden imprimir en A4.
 
-**👉 Jugar ahora: https://topochito.github.io/aquila-games/**
+**👉 Jugar ahora: https://topochito.github.io/adri-games/**
 
 Se pueden usar y compartir libremente con familias, alumnos y docentes.
 
 ---
 
-## Los juegos
+## 4.º de Primaria · Matemáticas (SA2 y SA3)
 
 ### ADRI_POWER
-https://topochito.github.io/aquila-games/adri-power/
+https://topochito.github.io/adri-games/4-primaria/matematicas/adri-power/
 
 Sigue el método **COMPRENDO → PIENSO → RESUELVO → COMPRUEBO**. Tiene cuatro botones:
 
@@ -23,7 +23,7 @@ Sigue el método **COMPRENDO → PIENSO → RESUELVO → COMPRUEBO**. Tiene cuat
 | **SOLUCIONES** | Zona para el adulto: hay que mantener pulsado 2 segundos. Incluye el procedimiento de cada ejercicio. |
 
 ### Expedición Mates
-https://topochito.github.io/aquila-games/expedicion-mates/
+https://topochito.github.io/adri-games/4-primaria/matematicas/expedicion-mates/
 
 Rondas rápidas de 10 retos por tema, con números nuevos en cada partida, pistas, rachas y estrellas. Temas:
 - el número que falta
