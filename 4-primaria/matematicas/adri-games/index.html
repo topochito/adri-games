@@ -66,6 +66,10 @@ h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance}
 .s1{border-color:#d9c9ff}.s2{border-color:#bcd9ff}.s3{border-color:#ffd3a6}.s4{border-color:#b9ebcf}
 .pb{flex:1;min-width:0}.pb h3{font-size:1.35rem;margin:0}.pb p{margin:.2rem 0 .6rem;color:var(--muted)}
 .pb .btn{display:inline-flex;align-items:center;text-decoration:none}
+.adultbtn{display:block;width:100%;margin:18px 0 0;min-height:56px;border-radius:18px;background:#fff;border:3px dashed #b9c6e4;font-weight:800;font-size:1rem;color:var(--muted)}
+.rep{border-collapse:collapse;width:100%;min-width:520px}.rep th,.rep td{border:1px solid var(--line);padding:8px;text-align:center}.rep td:first-child{text-align:left}
+.rep td.g{background:#e6f6ee;color:#0f5a37;font-weight:800}.rep td.a{background:#fff4d6;color:#7a5200;font-weight:800}.rep td.o{background:#ffe7d6;color:#8a3a00;font-weight:800}.rep td.na{color:#b0b8c9}
+.weak{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;padding:10px 0;border-top:1px solid var(--line)}.wbtns{display:flex;gap:8px;flex-wrap:wrap}
 .aviso{margin:.7rem 0 0;background:#fff8e1;border:2px solid #ffd54a;border-radius:14px;padding:8px 12px;color:#5a4300;font-size:.95rem}
 .pprog{font-weight:800;color:var(--ok);margin-left:8px}
 .mexp{display:flex;flex-wrap:wrap;gap:8px}.mchip{min-height:48px;padding:0 16px;border-radius:999px;background:#f1ebff;border:2px solid #cdb8ff;font-weight:800;color:#4b2a9e}.mchip.donee{background:#e6f6ee;border-color:var(--ok);color:#0f5a37}
@@ -316,6 +320,7 @@ body.big #tutor .bullets{font-size:1.75rem}body.big #tutor .tq{font-size:1.5rem}
   </div>
   <h2 class="missions-t">Elige tu misión</h2>
   <div class="fichasel" id="fichasel"></div>
+  <button class="adultbtn" id="adultBtn">👩‍👦 Zona de mamá/papá: progreso y refuerzo</button>
   <div class="method">
     <h2>Cómo trabajamos</h2>
     <div class="flow"><span class="ph comprendo">COMPRENDO</span><span class="arrow">→</span><span class="ph pienso">PIENSO</span><span class="arrow">→</span><span class="ph resuelvo">RESUELVO</span><span class="arrow">→</span><span class="ph compruebo">COMPRUEBO</span></div>
@@ -465,12 +470,19 @@ body.big #tutor .bullets{font-size:1.75rem}body.big #tutor .tq{font-size:1.5rem}
   <div class="topbar"><button class="back" data-go="mission">← Misión</button></div>
   <div class="card" style="text-align:center;max-width:560px;margin:30px auto">
     <h2 style="font-size:1.8rem">Zona para el adulto</h2>
-    <p style="color:var(--muted)">Las soluciones no aparecen en la ficha del alumno. Mantén pulsado el botón 2 segundos para entrar.</p>
+    <p style="color:var(--muted)">Solo para el adulto (soluciones y progreso). Mantén pulsado el botón 2 segundos para entrar.</p>
     <button class="hold" id="holdBtn"><span class="fill"></span><span>Mantener pulsado</span></button>
   </div>
 </section>
 
 <!-- SOLUTIONS -->
+<section id="informe" hidden>
+  <div class="topbar"><button class="back" data-go="home">← Inicio</button><div class="grow"></div><button class="small-btn" id="copyRep">📋 Copiar informe</button></div>
+  <h2 style="font-size:1.9rem">Progreso de Adri</h2>
+  <p style="color:var(--muted);margin:.3rem 0 12px">Se guarda en este iPad cada vez que entrega una parte. <b>Verde</b> = 80 % o más · <b>Ámbar</b> = 50–79 % · <b>Naranja</b> = menos del 50 %. «Pistas» = veces que pidió ayuda.</p>
+  <div id="repBody"></div>
+</section>
+
 <section id="sols" hidden>
   <div class="topbar"><button class="back" data-go="mission">← Misión</button></div>
   <h2 style="font-size:1.9rem">Solucionario</h2>
@@ -486,7 +498,7 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
 const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
-const SCREENS=['home','mission','intro','quest','review','results','final','print','explist','tutor','gate','sols'];
+const SCREENS=['home','mission','informe','intro','quest','review','results','final','print','explist','tutor','gate','sols'];
 function show(id){SCREENS.forEach(s=>$(s).hidden=s!==id);window.scrollTo(0,0)}
 
 /* ---------- state ---------- */
@@ -588,7 +600,7 @@ $('choiceAns').onclick=e=>{const b=e.target.closest('.choice');if(!b)return;cons
   save();renderQ()};
 $('readBtn').onclick=()=>{const r=st().read||(st().read={});r[curQ().id]=true;save();renderQ()};
 $('cartelBtn').onclick=()=>{cur.showCartel=$('qcartel').hidden;$('qcartel').hidden=!$('qcartel').hidden;$('cartelBtn').textContent=$('qcartel').hidden?'Ver cartel':'Ocultar cartel'};
-$('hintBtn').onclick=()=>{$('hintbox').innerHTML='<b>Pista:</b> '+md(curQ().pista);$('hintbox').hidden=false};
+$('hintBtn').onclick=()=>{$('hintbox').innerHTML='<b>Pista:</b> '+md(curQ().pista);$('hintbox').hidden=false;const h=st().hints||(st().hints={});h[curQ().id]=(h[curQ().id]||0)+1;save()};
 $('prevBtn').onclick=()=>{if(cur.q>0){cur.q--;renderQ()}};
 $('nextBtn').onclick=()=>{const ph=phases()[cur.p];if(cur.fromReview||cur.q===ph.preguntas.length-1){renderReview()}else{cur.q++;renderQ()}};
 document.addEventListener('keydown',e=>{
@@ -619,6 +631,7 @@ function renderResults(){
   $('resList').innerHTML=ph.preguntas.map((q,i)=>{const r=isRight(q,a[q.id]);if(r)ok++;const t=ansTxt(q,a[q.id]);
     return `<div class="item res ${r?'ok':'ko'}"><span class="n">${r?'✓':'↻'}</span><div class="t"><p><b>${qnum(cur.p,i)}.</b> ${md(q.enunciado)}</p><p class="num">${r?'<b>¡Muy bien!</b> ':'<b>Vamos a repasarlo:</b> '}Tu respuesta: <b>${t?esc(t):'sin responder'}</b>${r?'':' · La buena es: <b>'+esc(solTxt(q))+'</b>'}</p><ul class="sol">${q.solucion.map(s=>`<li>${md(s)}</li>`).join('')}</ul></div></div>`}).join('');
   $('resScore').textContent=`${ph.nombre}: ${ok} de ${ph.preguntas.length}`;
+  try{const h=st().hints||{};(store.log||(store.log=[])).push({fecha:new Date().toISOString().slice(0,16).replace('T',' '),ficha:ficha().id,titulo:ficha().titulo,fase:ph.id,ok,total:ph.preguntas.length,fallos:ph.preguntas.filter(q=>!isRight(q,a[q.id])).map(q=>q.id),pistas:ph.preguntas.reduce((s,q)=>s+(h[q.id]||0),0)});if(store.log.length>400)store.log=store.log.slice(-400);save()}catch(e){}
   $('resMsg').textContent=ok===ph.preguntas.length?'¡Todo bien! Eres un crack. 🏆':ok>0?'¡Bien hecho! Mira con calma las de ↻: equivocarse es parte de aprender.':'Tranquilo: esto es para practicar. Lee cómo se hace cada una, paso a paso. 💪';
   const nxt=phases()[cur.p+1];$('contBtn').textContent=nxt?`Ir a ${nxt.nombre} →`:'Ver resumen';
   show('results');
@@ -763,11 +776,39 @@ document.addEventListener('keydown',e=>{if($('tutor').hidden||T.ok)return;const 
   if(/^[0-9]$/.test(e.key)){T.v=applyKey(T.v,e.key);updT()}else if(e.key==='Backspace'){T.v=applyKey(T.v,'del');updT()}else if(e.key==='Enter')$('tCheck').click()});
 
 /* ---------- gate + solutions ---------- */
-let holdT=null;const hb=$('holdBtn');
-const holdStart=e=>{e.preventDefault();hb.classList.add('on');holdT=setTimeout(()=>{hb.classList.remove('on');renderSols()},2000)};
+let holdT=null,gateTarget=null;const hb=$('holdBtn');
+const holdStart=e=>{e.preventDefault();hb.classList.add('on');holdT=setTimeout(()=>{hb.classList.remove('on');if(gateTarget==='informe'){gateTarget=null;renderInforme()}else renderSols()},2000)};
 const holdEnd=()=>{hb.classList.remove('on');clearTimeout(holdT)};
 hb.addEventListener('pointerdown',holdStart);['pointerup','pointerleave','pointercancel'].forEach(t=>hb.addEventListener(t,holdEnd));
 hb.addEventListener('contextmenu',e=>e.preventDefault());
+$('adultBtn').onclick=()=>{gateTarget='informe';show('gate')};
+const FASE={comprendo:'Comprendo',pienso:'Pienso',resuelvo:'Resuelvo',compruebo:'Compruebo'};
+const TIPOERR={comprendo:'comprensión (leer y buscar el dato)',pienso:'razonamiento (pensar antes de calcular)',resuelvo:'procedimiento y cálculo',compruebo:'cálculo y revisión'};
+function lastByPhase(){const L={};(store.log||[]).forEach(r=>{L[r.ficha+'|'+r.fase]=r});return L}
+function renderInforme(){
+  const L=lastByPhase(),log=store.log||[];let h='',weak=[];
+  if(!log.length){$('repBody').innerHTML='<div class="card">Todavía no hay partes entregadas. Cuando Adri juegue una misión, aquí verás cómo le ha ido.</div>';show('informe');return}
+  h+='<div class="card" style="overflow-x:auto"><table class="rep"><tr><th>Misión</th>'+Object.values(FASE).map(f=>`<th>${f}</th>`).join('')+'</tr>';
+  DATA.fichas.forEach((f,fi)=>{if(!f.fases.some(ph=>L[f.id+'|'+ph.id]))return;
+    h+=`<tr><td><b>${esc(f.titulo)}</b></td>`+Object.keys(FASE).map(k=>{const r=L[f.id+'|'+k];if(!r)return '<td class="na">—</td>';const pc=Math.round(100*r.ok/r.total);
+      if(pc<80)weak.push({fi,f,k,r,pc});return `<td class="${pc>=80?'g':pc>=50?'a':'o'}">${r.ok}/${r.total}${r.pistas?`<br><small>${r.pistas} pista${r.pistas>1?'s':''}</small>`:''}</td>`}).join('')+'</tr>'});
+  h+='</table></div>';
+  if(weak.length){h+='<div class="card" style="margin-top:12px"><h3 style="margin:0 0 6px">🎯 Lo que más le cuesta · plan de refuerzo</h3><p style="color:var(--muted);margin:0 0 10px">Repite solo esa parte (se borran sus respuestas de esa parte) y antes repasa la explicación.</p>';
+    weak.sort((x,y)=>x.pc-y.pc).forEach(w=>{const exps=(w.f.aprender||[]).map(id=>DATA.explicaciones.findIndex(e=>e.id===id)).filter(i=>i>=0);
+      h+=`<div class="weak"><div><b>${esc(w.f.titulo)} · ${FASE[w.k]}</b> — ${w.r.ok} de ${w.r.total} (${w.pc} %)<br><small>Tipo de dificultad: ${TIPOERR[w.k]}${w.r.pistas?` · pidió ${w.r.pistas} pista(s)`:''}</small></div>
+      <div class="wbtns"><button class="btn" data-redo="${w.fi}|${w.k}">↻ Repetir esta parte</button>${exps.slice(0,2).map(i=>`<button class="mchip" data-e="${i}">▶ ${esc(DATA.explicaciones[i].titulo)}</button>`).join('')}</div></div>`});
+    h+='</div>'}else h+='<div class="card" style="margin-top:12px">🎉 Todo lo entregado está en verde. ¡Muy bien!</div>';
+  h+=`<div class="card" style="margin-top:12px"><h3 style="margin:0 0 6px">🗓️ Últimas entregas</h3><ul class="sol">${log.slice(-12).reverse().map(r=>`<li>${esc(r.fecha)} · ${esc(r.titulo)} · ${FASE[r.fase]}: <b>${r.ok}/${r.total}</b>${r.pistas?' · '+r.pistas+' pista(s)':''}</li>`).join('')}</ul></div>`;
+  $('repBody').innerHTML=h;show('informe');
+}
+$('repBody').onclick=e=>{const c=e.target.closest('[data-e]');if(c){T={e:+c.dataset.e,s:0,ok:false,v:''};renderTutor();show('tutor');return}
+  const r=e.target.closest('[data-redo]');if(!r)return;const [fi,k]=r.dataset.redo.split('|');store.fi=+fi;const s=st(),ph=phases().find(p=>p.id===k);
+  ph.preguntas.forEach(q=>{delete s.ans[q.id];if(s.hints)delete s.hints[q.id];if(s.read)delete s.read[q.id]});delete s.done[k];save();
+  cur={p:phases().indexOf(ph),q:0,fromReview:false,showCartel:false};show('quest');renderQ()};
+$('copyRep').onclick=()=>{const L=lastByPhase();const lines=['INFORME ADRI GAMES · '+new Date().toLocaleDateString('es-ES')];
+  DATA.fichas.forEach(f=>{const parts=Object.keys(FASE).map(k=>{const r=L[f.id+'|'+k];return r?`${FASE[k]} ${r.ok}/${r.total}${r.pistas?' ('+r.pistas+' pistas)':''}${r.fallos.length?' fallos: '+r.fallos.join(','):''}`:null}).filter(Boolean);if(parts.length)lines.push(`- ${f.titulo}: `+parts.join(' · '))});
+  const txt=lines.join('\n');try{navigator.clipboard.writeText(txt).then(()=>{$('copyRep').textContent='✓ Copiado'},()=>{prompt&&0})}catch(e){}
+  $('repBody').insertAdjacentHTML('beforeend',`<div class="card" style="margin-top:12px"><b>Texto del informe</b> (si no se copió solo, selecciónalo y cópialo):<textarea style="width:100%;min-height:140px;margin-top:8px;font-size:14px">${esc(txt)}</textarea></div>`)};
 function renderSols(){
   const f=ficha();let n=0,h=`<div class="card" style="margin-bottom:14px"><h3 style="font-size:1.4rem">${esc(f.titulo)}</h3>`;
   f.fases.forEach(ph=>{h+=`<p style="margin:14px 0 6px"><span class="ph ${ph.id}">${ph.nombre}</span></p>`;
