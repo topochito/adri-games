@@ -10,8 +10,8 @@ Se pueden usar y compartir libremente con familias, alumnos y docentes.
 
 ## 4.º de Primaria · Matemáticas (SA2 y SA3)
 
-### ADRI_POWER
-https://topochito.github.io/adri-games/4-primaria/matematicas/adri-power/
+### Adri Games · Fichas y explicaciones
+https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/
 
 Sigue el método **COMPRENDO → PIENSO → RESUELVO → COMPRUEBO**. Tiene cuatro botones:
 
@@ -43,7 +43,7 @@ Rondas rápidas de 10 retos por tema, con números nuevos en cada partida, pista
 3. Funciona en horizontal y en vertical.
 4. El progreso se guarda en ese iPad.
 
-**Imprimir:** en ADRI_POWER, pulsa **IMPRIMIR A4**. Abre un PDF o usa el botón **Imprimir**, y elige la impresora o **Guardar como PDF**.
+**Imprimir:** en Adri Games, pulsa **IMPRIMIR A4**. Abre un PDF o usa el botón **Imprimir**, y elige la impresora o **Guardar como PDF**.
 
 ## Contenidos (SA2 y SA3)
 
