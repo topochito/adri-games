@@ -126,6 +126,7 @@ h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance}
 .sit p{margin:.25rem 0}
 .cartel{border:3px solid var(--ink);border-radius:18px;overflow:hidden;max-width:520px;background:var(--paper)}
 .answer .cartel{font-size:16px}.answer .cartel td{padding:5px 12px}.answer .cartel .ct{padding:7px 12px;font-size:1.1rem}
+.cartel .ct .cico{font-size:1.6rem;line-height:1}
 .cartel .ct{display:flex;align-items:center;gap:10px;background:var(--comp);color:#fff;padding:10px 14px;font-family:var(--display);font-weight:800;font-size:1.3rem}
 .cartel table{width:100%;border-collapse:collapse}
 .cartel td{padding:8px 14px;border-top:1.5px solid var(--line)}
@@ -538,7 +539,8 @@ const ansTxt=(q,a)=>a===undefined||a===''||(Array.isArray(a)&&!a.length)?null:(q
 const solTxt=q=>q.tipo==='num'?fmt(q.respuesta)+(q.unidad?' '+q.unidad:''):Array.isArray(q.respuesta)?q.respuesta.join('; '):q.respuesta;
 
 /* ---------- builders ---------- */
-const cartelHTML=c=>`<div class="cartel"><div class="ct"><svg width="34" height="22" viewBox="0 0 34 22" aria-hidden="true"><path d="M2 11 C8 2 20 2 26 11 C20 20 8 20 2 11 Z" fill="#fff"/><path d="M26 11 L33 4 L33 18 Z" fill="#fff"/><circle cx="9" cy="9" r="2" fill="#2c74d8"/></svg>${esc(c.titulo)}</div><table>${c.filas.map(r=>`<tr><td>${esc(r[0])}</td><td class="num">${esc(r[1])}</td></tr>`).join('')}</table></div>`;
+const CICO={acuario:'🐠',cine:'🍿',sumas:'♻️',ceros:'🌳',combinadas:'🎂',estadistica:'📊',geometria:'🗺️',numeracion:'🃏',graficos:'🏆'};
+const cartelHTML=c=>`<div class="cartel"><div class="ct"><span class="cico" aria-hidden="true">${CICO[ficha().id]||'📋'}</span>${esc(c.titulo)}</div><table>${c.filas.map(r=>`<tr><td>${esc(r[0])}</td><td class="num">${esc(r[1])}</td></tr>`).join('')}</table></div>`;
 const barHTML=b=>`<div class="bar num"><div class="tot"><span>${esc(b.total)}</span></div><div class="cells">${Array(b.partes).fill(`<div>${esc(b.valor)}</div>`).join('')}</div></div>`;
 function stepperHTML(){const d=st().done;return phases().map((ph,i)=>`<span class="st ${ph.id} ${i===cur.p?'cur':''} ${d[ph.id]?'done':''}">${d[ph.id]?'✓ ':''}${ph.nombre}</span>`).join('')}
 
