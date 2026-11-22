@@ -74,6 +74,8 @@ h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance}
 .htabs button span{font-size:2.4rem;line-height:1}.htabs button b{font-family:var(--display);font-size:1.5rem}.htabs button small{font-weight:700;color:var(--muted);font-size:.85rem}
 .htabs button[aria-pressed="true"]{border-color:#f5b800;background:#fff8e1;box-shadow:0 5px 0 #f5b800}
 .flowmini{color:var(--muted);font-weight:700;font-size:.9rem;margin:0 0 10px}.flowmini .c1{color:var(--comp)}.flowmini .c2{color:var(--pien)}.flowmini .c3{color:var(--resu)}.flowmini .c4{color:var(--ok)}
+.mainbanner{border-radius:22px;overflow:hidden;background:#1a6fe0;background-image:linear-gradient(90deg,#1456c4,#2f8cf0 50%,#1456c4);text-align:center;margin:4px 0 10px;line-height:0}
+.mainbanner img{width:100%;max-height:330px;object-fit:contain;display:block;margin:0 auto}
 .hpill{background:#fff!important;color:#0d3a8f!important;border-radius:999px;padding:6px 14px;font-size:1rem!important}
 .starcount{background:#fff;color:#0d3a8f;border-radius:999px;padding:6px 14px;font-weight:800;font-size:1.1rem}
 .board{display:flex;align-items:center;justify-content:center;gap:16px;background:#24343a;background-image:radial-gradient(circle at 30% 20%,#33474e,#1f2d33);border:7px solid #b8864b;border-radius:18px;color:#fff;font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,4vw,2.3rem);padding:12px;margin:0 0 14px;box-shadow:0 6px 0 #8a6232}
@@ -197,6 +199,10 @@ h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance}
 .nocalc{margin:10px 0 0;font-size:1rem;background:#fdecea;border:2px solid #f3b6b1;color:#7a1f19;border-radius:14px;padding:8px 12px}
 .gate{background:var(--paper);border:3px solid var(--ok);border-radius:18px;padding:14px 16px;font-size:1.1rem}
 .gate p{margin:0 0 4px}.gate ol{margin:0 0 12px;padding-left:1.3em}
+.tutora{display:flex;align-items:flex-end;gap:10px;text-align:left}.tav{flex:none;line-height:0}.tav svg{width:64px;height:70px}
+.tbub{position:relative;background:#fff;color:var(--ink,#1c2333);border:3px solid #8250d0;border-radius:18px;padding:10px 14px;font-size:1.05rem;line-height:1.4}
+.tbub::before{content:"";position:absolute;left:-12px;bottom:14px;border:8px solid transparent;border-right-color:#8250d0}
+.hintbox .tbub{border-color:#e0b400}.hintbox .tbub::before{border-right-color:#e0b400}
 .hintbox{margin-top:12px;background:var(--hint);color:var(--hint-ink);border-radius:16px;padding:12px 14px;font-size:1.05rem}
 .plan{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 .plan span{font-size:14px;font-weight:800;padding:5px 10px;border-radius:10px;background:#fff1e3;color:#8a4300;border:1.5px solid #f5c79a}
@@ -355,8 +361,8 @@ body.big #tutor .bullets{font-size:1.75rem}body.big #tutor .tq{font-size:1.5rem}
 
 <!-- HOME -->
 <section id="home">
+  <div class="mainbanner"><img src="img/banner-principal.webp" alt="Adri Games · Juega · Aprende · Diviértete"></div>
   <div class="hero hero-s">
-    <img src="img/logo-adri-games.webp" alt="Adri Games" class="logo">
     <p class="hpill">4.º de Primaria · Matemáticas</p>
     <div class="grow"></div>
     <span class="starcount" id="starCount">⭐ 0</span>
@@ -449,7 +455,7 @@ body.big #tutor .bullets{font-size:1.75rem}body.big #tutor .tq{font-size:1.5rem}
 <!-- RESULTS -->
 <section id="results" hidden>
   <div class="topbar"><button class="back" data-go="mission">← Misión</button><div class="grow"><div class="stepper" id="stepper3"></div></div></div>
-  <div class="banner" id="resBanner"><span class="score" id="resScore"></span><p id="resMsg"></p></div>
+  <div class="banner" id="resBanner"><span class="score" id="resScore"></span><div id="resMsg"></div></div>
   <div class="list" id="resList"></div>
   <div class="nav"><button class="btn go grow" id="contBtn">Siguiente</button></div>
 </section>
@@ -459,7 +465,7 @@ body.big #tutor .bullets{font-size:1.75rem}body.big #tutor .tq{font-size:1.5rem}
   <div class="topbar"><button class="back" data-go="mission">← Misión</button></div>
   <div class="card" style="text-align:center">
     <h2 style="font-size:2.4rem">¡Ficha terminada!</h2>
-    <p id="finalTxt" style="font-size:1.2rem;color:var(--muted)"></p>
+    <div id="finalTxt" style="font-size:1.2rem"></div>
     <div class="list" id="finalList" style="text-align:left"></div>
     <div class="nav" style="justify-content:center"><button class="btn go" data-go="mission">📝 Ir a mi hoja en papel (paso 3)</button><button class="btn ghost" id="finalSolBtn">✔ Ver todas las soluciones</button><button class="btn ghost" id="resetBtn">Empezar de nuevo</button><button class="btn" data-go="home">Inicio</button></div>
   </div>
@@ -692,7 +698,9 @@ $('choiceAns').onclick=e=>{const b=e.target.closest('.choice');if(!b)return;cons
   save();renderQ()};
 $('readBtn').onclick=()=>{const r=st().read||(st().read={});r[curQ().id]=true;save();renderQ()};
 $('cartelBtn').onclick=()=>{cur.showCartel=$('qcartel').hidden;$('qcartel').hidden=!$('qcartel').hidden;$('cartelBtn').textContent=$('qcartel').hidden?'Ver cartel':'Ocultar cartel'};
-$('hintBtn').onclick=()=>{$('hintbox').innerHTML='<b>Pista:</b> '+md(curQ().pista);$('hintbox').hidden=false;const h=st().hints||(st().hints={});h[curQ().id]=(h[curQ().id]||0)+1;save()};
+/* La maestra tutora: aparece con las pistas, al revisar y al terminar */
+function teach(msg){const s=document.querySelector('#mTeach svg');return `<div class="tutora"><span class="tav">${s?s.outerHTML:'👩‍🏫'}</span><div class="tbub">${msg}</div></div>`}
+$('hintBtn').onclick=()=>{$('hintbox').innerHTML=teach('<b>Pista de la maestra:</b> '+md(curQ().pista));$('hintbox').hidden=false;const h=st().hints||(st().hints={});h[curQ().id]=(h[curQ().id]||0)+1;save()};
 $('prevBtn').onclick=()=>{if(cur.q>0){cur.q--;renderQ()}};
 $('nextBtn').onclick=()=>{const ph=phases()[cur.p];if(cur.fromReview||cur.q===ph.preguntas.length-1){renderReview()}else{cur.q++;renderQ()}};
 document.addEventListener('keydown',e=>{
@@ -724,7 +732,7 @@ function renderResults(){
     return `<div class="item res ${r?'ok':'ko'}"><span class="n">${r?'✓':'↻'}</span><div class="t"><p><b>${qnum(cur.p,i)}.</b> ${md(q.enunciado)}</p><p class="num">${r?'<b>¡Muy bien!</b> ':'<b>Vamos a repasarlo:</b> '}Tu respuesta: <b>${t?esc(t):'sin responder'}</b>${r?'':' · La buena es: <b>'+esc(solTxt(q))+'</b>'}</p><ul class="sol">${q.solucion.map(s=>`<li>${md(s)}</li>`).join('')}</ul></div></div>`}).join('');
   $('resScore').textContent=`${ph.nombre}: ${ok} de ${ph.preguntas.length}`;
   try{const h=st().hints||{};(store.log||(store.log=[])).push({fecha:new Date().toISOString().slice(0,16).replace('T',' '),ficha:ficha().id,titulo:ficha().titulo,fase:ph.id,ok,total:ph.preguntas.length,fallos:ph.preguntas.filter(q=>!isRight(q,a[q.id])).map(q=>q.id),pistas:ph.preguntas.reduce((s,q)=>s+(h[q.id]||0),0)});if(store.log.length>400)store.log=store.log.slice(-400);save()}catch(e){}
-  $('resMsg').textContent=ok===ph.preguntas.length?'¡Todo bien! Eres un crack. 🏆':ok>0?'¡Bien hecho! Mira con calma las de ↻: equivocarse es parte de aprender.':'Tranquilo: esto es para practicar. Lee cómo se hace cada una, paso a paso. 💪';
+  $('resMsg').innerHTML=teach(ok===ph.preguntas.length?'<b>¡Todo bien!</b> Eres un crack. 🏆':ok>0?'<b>¡Bien hecho!</b> Mira conmigo las de ↻, con calma: equivocarse es parte de aprender.':'<b>Tranquilo,</b> esto es para practicar. Vamos a leer juntos cómo se hace cada una, paso a paso. 💪');
   const nxt=phases()[cur.p+1];$('contBtn').textContent=nxt?`Ir a ${nxt.nombre} →`:'Ver resumen';
   show('results');
 }
@@ -732,7 +740,7 @@ $('contBtn').onclick=()=>{if(cur.p+1<phases().length){cur={p:cur.p+1,q:0,fromRev
 function renderFinal(){
   const a=st().ans;let tot=0,ok=0;
   $('finalList').innerHTML=phases().map(ph=>{const n=ph.preguntas.filter(q=>isRight(q,a[q.id])).length;tot+=ph.preguntas.length;ok+=n;return `<div class="item res"><span class="ph ${ph.id}" style="font-size:.9rem">${ph.nombre}</span><div class="t"><b>${n} de ${ph.preguntas.length}</b></div></div>`}).join('');
-  $('finalTxt').innerHTML=`Has acertado <b>${ok} de ${tot}</b> ejercicios.<br><br>📝 <b>Ahora coge tu hoja en papel y sigamos:</b> paso 3, <b>Demuestro</b>. Hazla tú solo, sin pistas.`;show('final');
+  $('finalTxt').innerHTML=teach(`<b>¡Misión terminada!</b> Has acertado <b>${ok} de ${tot}</b> ejercicios.<br>📝 <b>Ahora coge tu hoja en papel y sigamos:</b> paso 3, <b>Demuestro</b>. Hazla tú solo, sin pistas.`);show('final');
 }
 $('resetBtn').onclick=()=>{store.byFicha[ficha().id]={ans:{},done:{}};Object.keys(pads).forEach(k=>{if(k.startsWith(ficha().id+':'))delete pads[k]});save();renderIntro()};
 
