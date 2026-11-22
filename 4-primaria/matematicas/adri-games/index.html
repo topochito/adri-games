@@ -110,6 +110,7 @@ h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance}
 .rep{border-collapse:collapse;width:100%;min-width:520px}.rep th,.rep td{border:1px solid var(--line);padding:8px;text-align:center}.rep td:first-child{text-align:left}
 .rep td.g{background:#e6f6ee;color:#0f5a37;font-weight:800}.rep td.a{background:#fff4d6;color:#7a5200;font-weight:800}.rep td.o{background:#ffe7d6;color:#8a3a00;font-weight:800}.rep td.na{color:#b0b8c9}
 .weak{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;padding:10px 0;border-top:1px solid var(--line)}.wbtns{display:flex;gap:8px;flex-wrap:wrap}
+.tAsk{position:fixed;inset:0;background:rgba(10,20,40,.5);display:flex;align-items:center;justify-content:center;z-index:60;padding:16px}.tAsk[hidden]{display:none}.tAsk .card{max-width:480px;width:100%;text-align:center;font-size:1.2rem}.tAskB{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
 .temasg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:22px}
 .tcard{display:flex;flex-direction:column;gap:2px;text-align:left;padding:14px;border-radius:20px;background:#fff;border:3px solid #d9c9ff;box-shadow:0 4px 0 #d9c9ff;min-height:110px}
 .tcard .ti{font-size:1.8rem;line-height:1}.tcard b{font-family:var(--display);font-size:1.15rem;line-height:1.15}.tcard span{font-size:.78rem;font-weight:800;color:var(--muted)}
@@ -498,7 +499,7 @@ body.big #tutor .bullets{font-size:1.75rem}body.big #tutor .tq{font-size:1.5rem}
 
 <!-- TUTOR -->
 <section id="tutor" hidden>
-  <div class="topbar"><button class="back" data-go="explist">← Temas</button><div class="grow"></div>
+  <div class="topbar"><button class="back" data-go="tutorback" id="tBack">← Temas</button><div class="grow"></div>
     <button class="small-btn" id="tSpeak">🔊 Léemelo</button><button class="small-btn" id="tBig">A+</button><button class="small-btn" id="tSlow">🐢 Poco a poco: sí</button>
   </div>
   <div class="thero" id="tHero"><div class="thero-txt"><span class="thero-k" id="tTitle"></span><h2 id="tName"></h2><p id="tCtx"></p></div><div class="thero-art" id="tArt"></div></div>
@@ -523,6 +524,7 @@ body.big #tutor .bullets{font-size:1.75rem}body.big #tutor .tq{font-size:1.5rem}
     </div>
   </div>
 </section>
+<div id="tAsk" class="tAsk" hidden role="dialog" aria-modal="true"><div class="card"><p id="tAskTxt"></p><div class="tAskB" id="tAskBtns"></div></div></div>
 
 <!-- GATE -->
 <section id="gate" hidden>
@@ -558,7 +560,7 @@ const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'
 const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
 const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
 const SCREENS=['home','tema','mission','informe','intro','quest','review','results','final','print','explist','tutor','gate','sols'];
-function show(id){SCREENS.forEach(s=>$(s).hidden=s!==id);$('homeFab').hidden=id==='home';window.scrollTo(0,0)}
+function show(id){SCREENS.forEach(s=>$(s).hidden=s!==id);$('tAsk').hidden=true;$('homeFab').hidden=id==='home';window.scrollTo(0,0)}
 
 /* ---------- state ---------- */
 const KEY='adri-power-v1';
@@ -623,7 +625,7 @@ function renderTema(){const tm=DATA.temas[store.tema||0];if(!tm){renderHome();re
    <div class="pstep s4"><span class="pn">4</span><div class="pb"><h3>Me corrijo</h3><p>Cuando termines, mira las soluciones y corrige con otro color.</p><button class="btn" data-sol="${fi}">✔ Ver soluciones</button> <a class="btn ghost" href="imprimir/ficha_${tm.practica}_corregida.pdf" target="_blank" rel="noopener">📄 Abrir ficha corregida</a></div></div>`;
   if(mis)h+=`<div class="pstep"><span class="pn" style="background:#ff8f1f">🗺️</span><div class="pb"><h3>Problemas de este tema</h3><p>Misiones con situaciones de la vida real.</p><div class="mexp">${mis}</div></div></div>`;
   $('tmPath').innerHTML=h;show('tema')}
-$('tmPath').onclick=e=>{const c=e.target.closest('[data-e]');if(c){T={e:+c.dataset.e,s:0,ok:false,v:''};renderTutor();show('tutor');return}
+$('tmPath').onclick=e=>{const c=e.target.closest('[data-e]');if(c){T={e:+c.dataset.e,s:0,ok:false,v:'',from:'tema'};renderTutor();show('tutor');return}
   const p=e.target.closest('[data-pr]');if(p){store.fi=+p.dataset.pr;save();play();return}
   const m=e.target.closest('[data-mis]');if(m){store.fi=+m.dataset.mis;save();renderMission();return}
   const s=e.target.closest('[data-sol]');if(s){if(s.dataset.armed){store.fi=+s.dataset.sol;save();renderSols()}else{s.dataset.armed='1';s.textContent='¿Has terminado y revisado la ficha? Toca otra vez'}}};
@@ -660,7 +662,7 @@ function renderHome(){
 $('htabs').onclick=e=>{const b=e.target.closest('[data-tab]');if(b){store.homeTab=b.dataset.tab;save();renderHome()}};
 $('fichasel').onclick=e=>{const b=e.target.closest('[data-fi]');if(b){store.fi=+b.dataset.fi;save();renderMission()}};
 document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(!b)return;const g=b.dataset.go;
-  if(g==='home')renderHome();else if(g==='mission')renderMission();else if(g==='play')play();else if(g==='print')renderPrint();else if(g==='explist')renderExpList();else if(g==='gate'){show('gate')}});
+  if(g==='home')renderHome();else if(g==='mission')renderMission();else if(g==='play')play();else if(g==='print')renderPrint();else if(g==='explist')renderExpList();else if(g==='tutorback')tutorBack();else if(g==='gate'){show('gate')}});
 
 /* ---------- play ---------- */
 function play(){
@@ -854,7 +856,8 @@ function renderTutor(){
   $('tSteps').innerHTML=ex.pasos.map((p,i)=>`<span class="${i<T.s?'ok':i===T.s?'on':''}">${i<T.s?'✓ ':''}${STEPNAMES[p.tipo]||p.tipo}</span>`).join('');
   const vids=(DATA.videos||{})[ex.id]||[];
   $('tVideo').innerHTML=vids.map(v=>`<a class="vid" href="${esc(v.url)}" target="_blank" rel="noopener"><span style="font-size:1.8rem">🎬</span><span><b>Ver vídeo · ${esc(v.duracion)}</b><span>${esc(v.titulo)} · ${esc(v.canal)}</span></span></a>`).join('');
-  $('tTitle').textContent=`TEMA · PASO ${T.s+1} DE ${ex.pasos.length}`;
+  {const tm=temaOf();$('tTitle').textContent=(tm?`${tm.icono} TEMA: ${tm.titulo.toUpperCase()}`:'TEMA')+` · PASO ${T.s+1} DE ${ex.pasos.length}`;
+   $('tBack').textContent=tm?'← Volver al tema':'← Explicaciones'}
   $('tType').textContent=step.tipo;
   {const teach=/Ejemplo/.test(step.tipo);$('mPixel').hidden=teach;$('mTeach').hidden=!teach}
   $('tLines').innerHTML=step.lineas.map(l=>`<li>${md(l)}</li>`).join('');
@@ -883,7 +886,18 @@ $('tSpeak').onclick=()=>{try{const ex=DATA.explicaciones[T.e],st=ex.pasos[T.s],n
   const txt=[st.tipo==='Concepto'&&ex.contexto?ex.contexto:'',...st.lineas.slice(0,n),n>=st.lineas.length?st.pregunta.texto:''].filter(Boolean).map(plain).join('. ');
   speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(txt);u.lang='es-ES';u.rate=0.9;speechSynthesis.speak(u)}catch(e){}};
 $('tChoices').onclick=e=>{const b=e.target.closest('.choice');if(b&&!T.ok&&!b.disabled)tAnswer(b.dataset.o,b)};
-$('tNext').onclick=()=>{const ex=DATA.explicaciones[T.e];if(T.s<ex.pasos.length-1){T.s++;T.ok=false;renderTutor();window.scrollTo(0,0)}else{store.expDone[ex.id]=true;save();renderExpList()}};
+$('tNext').onclick=()=>{const ex=DATA.explicaciones[T.e];if(T.s<ex.pasos.length-1){T.s++;T.ok=false;renderTutor();window.scrollTo(0,0)}else{store.expDone[ex.id]=true;save();
+  const tm=temaOf();if(!tm){renderExpList();return}
+  ask(`🎉 <b>¡Bloque terminado!</b><br>Estás en el tema <b>${tm.icono} ${esc(tm.titulo)}</b>.<br>¿Quieres seguir en este tema o volver a todos los temas?`,
+    [{t:`${tm.icono} Seguir en este tema`,c:'go',f:renderTema},{t:'📚 Ver todos los temas',c:'ghost',f:()=>{store.homeTab='temas';save();renderHome()}}])}};
+function temaOf(){return T&&T.from==='tema'?DATA.temas[store.tema||0]:null}
+function ask(html,btns){$('tAskTxt').innerHTML=html;
+  $('tAskBtns').innerHTML=btns.map((b,i)=>`<button class="btn ${b.c||''}" data-ai="${i}">${b.t}</button>`).join('');
+  $('tAskBtns').onclick=e=>{const x=e.target.closest('[data-ai]');if(!x)return;$('tAsk').hidden=true;btns[+x.dataset.ai].f()};
+  $('tAsk').hidden=false}
+function tutorBack(){const tm=temaOf();if(!tm){renderExpList();return}
+  ask(`Estás en el tema <b>${tm.icono} ${esc(tm.titulo)}</b>.<br>¿Quieres quedarte aquí o volver al tema?`,
+    [{t:'👍 Me quedo aquí',c:'go',f:()=>{}},{t:'← Volver al tema',c:'ghost',f:renderTema}])}
 document.addEventListener('keydown',e=>{if($('tutor').hidden||T.ok)return;const q=DATA.explicaciones[T.e].pasos[T.s].pregunta;if(q.tipo!=='num')return;
   if(/^[0-9]$/.test(e.key)){T.v=applyKey(T.v,e.key);updT()}else if(e.key==='Backspace'){T.v=applyKey(T.v,'del');updT()}else if(e.key==='Enter')$('tCheck').click()});
 
