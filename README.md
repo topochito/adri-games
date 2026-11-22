@@ -33,13 +33,15 @@ Sumas y restas hasta 4 cifras · operaciones combinadas · multiplicar por 1 y 2
 
 | # | Ficha | Ejercicios | PDF |
 |---|---|---|---|
-| 1 | Excursión al acuario | 14 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_acuario.pdf) |
+| 1 | Excursión al acuario | 15 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_acuario.pdf) |
 | 2 | Tarde de cine | 15 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_cine.pdf) |
 | 3 | La gran recogida de tapones | 17 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_sumas.pdf) |
 | 4 | Visita al vivero | 17 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_ceros.pdf) |
 | 5 | La compra del cumpleaños | 17 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_combinadas.pdf) |
 | 6 | Detectives de datos: la encuesta | 16 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_estadistica.pdf) |
 | 7 | El plano del barrio | 16 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_geometria.pdf) |
+| 8 | La tienda de los coleccionistas | 18 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_numeracion.pdf) |
+| 9 | La liga del recreo | 18 | [PDF](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/ficha_graficos.pdf) |
 
 - [Explicaciones (PDF)](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/explicaciones.pdf) · [Solucionario (PDF)](https://topochito.github.io/adri-games/4-primaria/matematicas/adri-games/imprimir/soluciones.pdf)
 
@@ -60,6 +62,10 @@ Sumas y restas hasta 4 cifras · operaciones combinadas · multiplicar por 1 y 2
 - Punto, recta, semirrecta y segmento (SA2)
 - Paralelas, secantes y perpendiculares (SA2)
 - Figuras simétricas y eje de simetría (SA2)
+- Series: descubre la regla (SA2)
+- Comparar números: < y > (SA2)
+- Leer y hacer un gráfico de barras (SA2)
+- Aproximar a la centena y a la UM (SA2)
 
 ### Lengua · _próximamente_
 
