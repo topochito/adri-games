@@ -568,7 +568,15 @@ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}};
 const ficha=()=>DATA.fichas[Math.min(store.fi,DATA.fichas.length-1)];
 const st=()=>{const id=ficha().id;if(!store.byFicha[id])store.byFicha[id]={ans:{},done:{}};return store.byFicha[id]};
 let cur={p:0,q:0,fromReview:false,showCartel:false};
-const phases=()=>ficha().fases;
+/* La práctica de cada tema se hace en el iPad en RONDAS cortas (5–6 ejercicios): entrega y ve la corrección enseguida.
+   En papel sigue siendo una sola ficha. */
+const _ph={};
+function PH(f){if(_ph[f.id])return _ph[f.id];if(!f.practica)return _ph[f.id]=f.fases;
+  const qs=f.fases[0].preguntas,r=Math.max(1,Math.ceil(qs.length/6)),out=[];let s=0;
+  for(let i=0;i<r;i++){const n=Math.round((qs.length-s)/(r-i));
+    out.push(Object.assign({},f.fases[0],{id:i?'practica_'+(i+1):'practica',nombre:'RONDA '+(i+1),lema:`Ronda ${i+1} de ${r}: revisa y entrega para ver cómo te ha ido.`,preguntas:qs.slice(s,s+n)}));s+=n}
+  return _ph[f.id]=out}
+const phases=()=>PH(ficha());
 const qnum=(p,q)=>{let n=0;for(let i=0;i<p;i++)n+=phases()[i].preguntas.length;return n+q+1};
 const sameSet=(a,b)=>Array.isArray(a)&&a.length===b.length&&b.every(x=>a.includes(x));
 const isRight=(q,a)=>q.tipo==='num'?(a!==undefined&&a!==''&&Number(a)===q.respuesta):q.tipo==='multi'?sameSet(a,q.respuesta):a===q.respuesta;
@@ -592,8 +600,8 @@ const CHANGED=['acuario','cine','sumas','combinadas','estadistica','geometria'];
 /* ---------- Temas ---------- */
 const FIDX=id=>DATA.fichas.findIndex(f=>f.id===id),EIDX=id=>DATA.explicaciones.findIndex(e=>e.id===id);
 /* hecho / sin hacer (el adulto puede cambiarlo en su zona) */
-function partsF(f){const s=store.byFicha[f.id];return s?f.fases.filter(p=>s.done[p.id]).length:0}
-function doneF(f){const m=(store.marks||{})[f.id];if(m!==undefined)return m;return partsF(f)===f.fases.length}
+function partsF(f){const s=store.byFicha[f.id];return s?PH(f).filter(p=>s.done[p.id]).length:0}
+function doneF(f){const m=(store.marks||{})[f.id];if(m!==undefined)return m;return partsF(f)===PH(f).length}
 function doneT(tm){const m=(store.marks||{})['tema:'+tm.id];if(m!==undefined)return m;
   const ex=tm.explicaciones.every(id=>store.expDone[id]),k=tm.practica?FIDX(tm.practica):-1;return ex&&(k<0||doneF(DATA.fichas[k]))}
 const STARS=(d,n)=>'★'.repeat(d)+'<i>'+'☆'.repeat(Math.max(0,n-d))+'</i>';
@@ -606,13 +614,13 @@ function renderTema(){const tm=DATA.temas[store.tema||0];if(!tm){renderHome();re
   $('tmIco').textContent=tm.icono+'  TEMA';$('tmTitle').textContent=tm.titulo;
   const chips=tm.explicaciones.map(id=>{const k=EIDX(id);if(k<0)return '';const x=DATA.explicaciones[k];return `<button class="mchip ${store.expDone[id]?'donee':''}" data-e="${k}">${store.expDone[id]?'✓ ':'▶ '}${esc(x.titulo)}</button>`}).join('');
   const fi=tm.practica?FIDX(tm.practica):-1;let prog='';
-  if(fi>=0){const s=store.byFicha[tm.practica];prog=s&&s.done&&s.done.practica?'✓ hecho':''}
+  if(fi>=0){const pf=DATA.fichas[fi],nr=PH(pf).length,dr=partsF(pf);prog=dr===nr?'✓ hecho':dr?`${dr} de ${nr} rondas`:`${nr} rondas cortas`}
   const mis=(tm.misiones||[]).map(id=>{const k=FIDX(id);return k<0?'':`<button class="mchip" data-mis="${k}">🗺️ ${esc(DATA.fichas[k].titulo)}</button>`}).join('');
   $('tmInfo').textContent=`${tm.explicaciones.length} explicaciones`+(fi>=0?` · ${NPR(fi)} ejercicios de práctica · ficha A4`:'');
   let h=`<div class="pstep s1"><span class="pn">1</span><div class="pb"><h3>Aprendo</h3><p>Toca cada explicación. Puedes subrayar con el dedo lo importante 🖍️.</p><div class="mexp">${chips}</div></div></div>`;
   if(fi>=0)h+=`<div class="pstep s2"><span class="pn">2</span><div class="pb"><h3>Practico</h3><p>Ejercicios del tema en el iPad, con pistas.</p><button class="btn" data-pr="${fi}">▶ Practicar el tema</button> <span class="pprog">${prog}</span></div></div>
    <div class="pstep s3"><span class="pn">3</span><div class="pb"><h3>Demuestro</h3><p>Los mismos ejercicios en papel, <b>solo y sin pistas</b>.</p><a class="btn" href="imprimir/ficha_${tm.practica}.pdf" target="_blank" rel="noopener">🖨 Abrir la ficha A4 del tema</a></div></div>
-   <div class="pstep s4"><span class="pn">4</span><div class="pb"><h3>Me corrijo</h3><p>Cuando termines, mira las soluciones y corrige con otro color.</p><button class="btn" data-sol="${fi}">✔ Ver soluciones</button></div></div>`;
+   <div class="pstep s4"><span class="pn">4</span><div class="pb"><h3>Me corrijo</h3><p>Cuando termines, mira las soluciones y corrige con otro color.</p><button class="btn" data-sol="${fi}">✔ Ver soluciones</button> <a class="btn ghost" href="imprimir/ficha_${tm.practica}_corregida.pdf" target="_blank" rel="noopener">📄 Abrir ficha corregida</a></div></div>`;
   if(mis)h+=`<div class="pstep"><span class="pn" style="background:#ff8f1f">🗺️</span><div class="pb"><h3>Problemas de este tema</h3><p>Misiones con situaciones de la vida real.</p><div class="mexp">${mis}</div></div></div>`;
   $('tmPath').innerHTML=h;show('tema')}
 $('tmPath').onclick=e=>{const c=e.target.closest('[data-e]');if(c){T={e:+c.dataset.e,s:0,ok:false,v:''};renderTutor();show('tutor');return}
@@ -636,16 +644,16 @@ function renderMission(){
    <div class="pstep s1"><span class="pn">1</span><div class="pb"><h3>Aprendo</h3><p>Toca cada explicación. Son cortas, de 5 a 10 minutos.</p><div class="mexp" id="mExp">${chips||'<button class="mchip" data-go2="explist">Ver todas</button>'}</div></div></div>
    <div class="pstep s2"><span class="pn">2</span><div class="pb"><h3>Practico</h3><p>Juega la misión en el iPad. Tienes pistas y borrador para el Pencil.</p><button class="btn" data-go2="play">▶ Jugar la misión</button> <span class="pprog">${n===phases().length?'✓ completada':n+' de '+phases().length+' partes'}</span></div></div>
    <div class="pstep s3"><span class="pn">3</span><div class="pb"><h3>Demuestro</h3><p>Haz la ficha en papel, <b>solo y sin pistas</b>, como en el examen.</p><a class="btn" href="${pdf}" target="_blank" rel="noopener">🖨 Abrir la ficha A4</a>${CHANGED.includes(f.id)?'<p class="aviso">⚠️ <b>Aviso:</b> si imprimiste esta ficha antes, puede tener algún pequeño fallo que ya hemos arreglado. Ha sido algo excepcional y no volverá a pasar. Si algo no te cuadra, fíate de las soluciones de aquí.</p>':''}</div></div>
-   <div class="pstep s4"><span class="pn">4</span><div class="pb"><h3>Me corrijo</h3><p>Cuando termines la ficha, mira las soluciones y corrige con <b>otro color</b>.</p><button class="btn" data-go2="sols">✔ Ver soluciones</button></div></div>`;
+   <div class="pstep s4"><span class="pn">4</span><div class="pb"><h3>Me corrijo</h3><p>Cuando termines la ficha, mira las soluciones y corrige con <b>otro color</b>.</p><button class="btn" data-go2="sols">✔ Ver soluciones</button> <a class="btn ghost" href="imprimir/ficha_${f.id}_corregida.pdf" target="_blank" rel="noopener">📄 Abrir ficha corregida</a></div></div>`;
   show('mission');
 }
 function renderHome(){
   try{renderTemas()}catch(e){}
   const tab=store.homeTab||'temas';$('tabTemas').hidden=tab!=='temas';$('tabMis').hidden=tab!=='mis';
   document.querySelectorAll('#htabs [data-tab]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.tab===tab));
-  $('fichasel').innerHTML=DATA.fichas.map((x,i)=>{if(x.practica)return '';const dn=partsF(x),nf=x.fases.length,ok=doneF(x);
+  $('fichasel').innerHTML=DATA.fichas.map((x,i)=>{if(x.practica)return '';const dn=partsF(x),nf=PH(x).length,ok=doneF(x);
     return `<button data-fi="${i}" class="${ok?'isdone':''}" aria-pressed="${i===store.fi&&!ok}"><span class="art">${CICO[x.id]||'📋'}</span><span class="mb"><span class="mn">MISIÓN ${i+1}</span><span class="mt">${esc(x.titulo)}</span><span class="mm"><span class="stars">${STARS(dn,nf)}</span> ${dn} de ${nf} partes</span></span>${ok?'<span class="dbadge">✓ Hecha</span>':''}</button>`}).join('');
-  const all=DATA.fichas.reduce((s,f)=>s+f.fases.length,0),got=DATA.fichas.reduce((s,f)=>s+partsF(f),0)+Object.keys(store.expDone||{}).length;
+  const all=DATA.fichas.reduce((s,f)=>s+PH(f).length,0),got=DATA.fichas.reduce((s,f)=>s+partsF(f),0)+Object.keys(store.expDone||{}).length;
   $('starCount').textContent=`⭐ ${got} / ${all+DATA.explicaciones.length}`;
   show('home');
 }
@@ -886,8 +894,8 @@ const holdEnd=()=>{hb.classList.remove('on');clearTimeout(holdT)};
 hb.addEventListener('pointerdown',holdStart);['pointerup','pointerleave','pointercancel'].forEach(t=>hb.addEventListener(t,holdEnd));
 hb.addEventListener('contextmenu',e=>e.preventDefault());
 $('adultBtn').onclick=()=>{gateTarget='informe';show('gate')};
-const FASE={comprendo:'Comprendo',pienso:'Pienso',resuelvo:'Resuelvo',compruebo:'Compruebo',practica:'Práctica'};
-const TIPOERR={practica:'práctica del tema (concepto y cálculo)',comprendo:'comprensión (leer y buscar el dato)',pienso:'razonamiento (pensar antes de calcular)',resuelvo:'procedimiento y cálculo',compruebo:'cálculo y revisión'};
+const FASE={comprendo:'Comprendo',pienso:'Pienso',resuelvo:'Resuelvo',compruebo:'Compruebo',practica:'Ronda 1',practica_2:'Ronda 2',practica_3:'Ronda 3',practica_4:'Ronda 4',practica_5:'Ronda 5'};
+const TIPOERR={practica:'práctica del tema (concepto y cálculo)',practica_2:'práctica del tema (concepto y cálculo)',practica_3:'práctica del tema (concepto y cálculo)',practica_4:'práctica del tema (concepto y cálculo)',practica_5:'práctica del tema (concepto y cálculo)',comprendo:'comprensión (leer y buscar el dato)',pienso:'razonamiento (pensar antes de calcular)',resuelvo:'procedimiento y cálculo',compruebo:'cálculo y revisión'};
 function lastByPhase(){const L={};(store.log||[]).forEach(r=>{L[r.ficha+'|'+r.fase]=r});return L}
 function renderInforme(){
   const L=lastByPhase(),log=store.log||[];let h='',weak=[];
@@ -900,13 +908,16 @@ function renderInforme(){
   h+=`<div class="card" style="margin-top:12px"><h3 style="margin:0 0 4px">📝 Para repasar</h3><p style="color:var(--muted);margin:0">Ejercicios que falló en su último intento. Marca ✓ cuando los hayáis repasado juntos (puedes desmarcarlos).</p>
     ${rp.length?`<div class="chk">${rp.map(x=>`<button class="chkrow rep ${R[x.key]?'on':''}" data-rep="${esc(x.key)}"><span class="box">${R[x.key]?'✓':''}</span><span><b>${esc(x.f.titulo)} · ${FASE[x.fase]||''}</b><br>${md(x.q.enunciado)}</span></button>`).join('')}</div>
     <p style="margin:8px 0 0;color:var(--muted)">Repasados: <b>${rp.filter(x=>R[x.key]).length} de ${rp.length}</b></p>`:'<p style="margin:10px 0 0">🎉 No hay ejercicios fallados pendientes.</p>'}</div>`;
+  h+=`<div class="card" style="margin-top:12px"><h3 style="margin:0 0 4px">📄 Fichas corregidas (PDF)</h3><p style="color:var(--muted);margin:0 0 8px">La misma ficha que tiene en papel, con las respuestas y los pasos en rojo. Ábrela al lado de la suya para corregir.</p><div class="mexp">${DATA.fichas.map(f=>`<a class="mchip" style="display:inline-flex;align-items:center;text-decoration:none" href="imprimir/ficha_${f.id}_corregida.pdf" target="_blank" rel="noopener">${f.practica?'📚':(CICO[f.id]||'📋')} ${esc(f.titulo.replace('Practico: ',''))}</a>`).join('')}</div></div>`;
   h+=`<div class="card" style="margin-top:12px"><h3 style="margin:0 0 4px">⟲ Empezar de cero</h3><p style="color:var(--muted);margin:0 0 10px">Borra en este iPad todo el progreso, las marcas, los dibujos del borrador y el historial, para volver a hacer todo el repaso.</p><button class="btn danger" id="resetAll">⟲ Reiniciar todo el repaso</button></div>`;
   if(!log.length){$('repBody').innerHTML=h+'<div class="card" style="margin-top:12px">Todavía no hay partes entregadas. Cuando Adri juegue, aquí verás cómo le ha ido.</div>';show('informe');return}
-  h+='<div class="card" style="overflow-x:auto"><table class="rep"><tr><th>Misión</th>'+Object.values(FASE).map(f=>`<th>${f}</th>`).join('')+'</tr>';
-  DATA.fichas.forEach((f,fi)=>{if(!f.fases.some(ph=>L[f.id+'|'+ph.id]))return;
-    h+=`<tr><td><b>${esc(f.titulo)}</b></td>`+Object.keys(FASE).map(k=>{const r=L[f.id+'|'+k];if(!r)return '<td class="na">—</td>';const pc=Math.round(100*r.ok/r.total);
-      if(pc<80)weak.push({fi,f,k,r,pc});return `<td class="${pc>=80?'g':pc>=50?'a':'o'}">${r.ok}/${r.total}${r.pistas?`<br><small>${r.pistas} pista${r.pistas>1?'s':''}</small>`:''}</td>`}).join('')+'</tr>'});
-  h+='</table></div>';
+  const cell=(f,fi,k)=>{const r=L[f.id+'|'+k];if(!r)return '<td class="na">—</td>';const pc=Math.round(100*r.ok/r.total);
+      if(pc<80)weak.push({fi,f,k,r,pc});return `<td class="${pc>=80?'g':pc>=50?'a':'o'}">${r.ok}/${r.total}${r.pistas?`<br><small>${r.pistas} pista${r.pistas>1?'s':''}</small>`:''}</td>`};
+  const MK=['comprendo','pienso','resuelvo','compruebo'],RK=['practica','practica_2','practica_3','practica_4','practica_5'];
+  const table=(tit,keys,pr)=>{let rows='';DATA.fichas.forEach((f,fi)=>{if(!!f.practica!==pr||!PH(f).some(ph=>L[f.id+'|'+ph.id]))return;
+      rows+=`<tr><td><b>${esc(f.titulo.replace('Practico: ',''))}</b></td>`+keys.map(k=>PH(f).some(p=>p.id===k)?cell(f,fi,k):'<td class="na"></td>').join('')+'</tr>'});
+    return rows?`<div class="card" style="overflow-x:auto;margin-top:12px"><table class="rep"><tr><th>${tit}</th>${keys.map(k=>`<th>${FASE[k]}</th>`).join('')}</tr>${rows}</table></div>`:''};
+  h+=table('Misión',MK,false)+table('Práctica del tema',RK,true);
   if(weak.length){h+='<div class="card" style="margin-top:12px"><h3 style="margin:0 0 6px">🎯 Lo que más le cuesta · plan de refuerzo</h3><p style="color:var(--muted);margin:0 0 10px">Repite solo esa parte (se borran sus respuestas de esa parte) y antes repasa la explicación.</p>';
     weak.sort((x,y)=>x.pc-y.pc).forEach(w=>{const exps=(w.f.aprender||[]).map(id=>DATA.explicaciones.findIndex(e=>e.id===id)).filter(i=>i>=0);
       h+=`<div class="weak"><div><b>${esc(w.f.titulo)} · ${FASE[w.k]}</b> — ${w.r.ok} de ${w.r.total} (${w.pc} %)<br><small>Tipo de dificultad: ${TIPOERR[w.k]}${w.r.pistas?` · pidió ${w.r.pistas} pista(s)`:''}</small></div>
